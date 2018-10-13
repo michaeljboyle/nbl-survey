@@ -1,0 +1,62 @@
+<div layout="column" layout-fill>
+    <div flex="15" layout="row" ng-show="vm.hasPrevious()">
+        <div flex class="colorblack bottombtn" layout="column" layout-align="center center" ng-click="vm.back()">
+            BACK
+        </div>
+    </div>
+    <div flex layout="column" layout-align="center center" layout-padding>
+        <div><h1 class="md-display-1 center">{{ vm.questionText }}</h1></div>
+    </div>
+
+    <!-- Text input -->
+    <div flex ng-if="vm.qtype == 'text'" layout="column" layout-align="center bottom" layout-padding>
+        <md-input-container class="textInput">
+            <textarea md-no-resize ng-model="vm.input"></textarea> 
+        </md-input-container>
+    </div>
+
+    <!-- Number input -->
+    <div flex ng-if="vm.qtype == 'number'" layout="column" layout-align="center center" layout-padding>>
+        <md-input-container class="numberInput" flex>
+            <input ng-model="vm.input" type="number">
+        </md-input-container>
+    </div>
+
+    <!-- Multiselect input -->
+    <div flex ng-if="vm.qtype == 'multiselect'" layout="row" layout-padding layout-wrap>
+        <div data-ng-repeat="option in vm.options">
+            <md-checkbox ng-click="vm.toggleSelection(option)" ng-checked="vm.isChecked(option)">
+                {{ option }}
+            </md-checkbox>
+       </div>
+       <div>
+           <md-checkbox ng-click="vm.toggleOther()" ng-checked="vm.otherChecked">
+                Other
+            </md-checkbox>
+        </div>
+    </div>
+    <div flex="20" layout-padding ng-if="vm.otherChecked">
+        <md-input-container flex>
+            <label>Other</label>
+            <input type="text" ng-model="vm.other">
+        </md-input-container>
+    </div>
+
+    <!-- Bottom buttons -->
+    <!-- Yes/no buttons -->
+    <div ng-if="vm.qtype == 'yesno'" flex="15" layout="row">
+        <div flex="50" class="colorgrey bottombtn" layout="column" layout-align="center center" ng-click="vm.submitResponse(false)">
+            NO
+        </div>
+        <div flex="50" class="colorred bottombtn" layout="column" layout-align="center center" ng-click="vm.submitResponse(true)">
+            YES
+        </div>
+    </div>
+
+    <!--  Text/number/multiselect button -->
+    <div ng-if="vm.qtype != 'yesno'" flex="15" layout="row">
+        <div flex class="colorgrey bottombtn" layout="column" layout-align="center center" ng-click="vm.submitResponse(vm.input)">
+            NEXT
+        </div>
+    </div>
+</div>

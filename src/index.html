@@ -1,14 +1,79 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-ng-app="nblsurvey" ng-strict-di>
 <head>
-  <meta charset="utf-8">
-  <title>NblSurvey</title>
-  <base href="/">
+    <meta charset="utf-8">
+    <title>NBL SUrvey</title>
+    <style>
+        /* This helps the ng-show/ng-hide animations start at the right place. */
+        /* Since Angular has this but needs to load, this gives us the class early. */
+        .ng-hide {
+            display: none!important;
+        }
+    </style>
+    <base href="/src/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+
+    <!-- inject-vendor:css -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic,900">
+    <!-- endinject -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="assets/css/app.css">
+    <!-- endinject -->
 </head>
 <body>
-  <app-root></app-root>
+    <div data-ng-include="'app/layout/shell.html'" layout-fill></div>  
+    <!-- <div layout="column" layout-fill>
+        <div data-ng-include="'app/layout/shell.html'"></div>  
+        <div flex="grow" ui-view></div>
+    </div> -->
+   
+
+    <!-- <app-root></app-root> -->
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+    <!-- Angular third party -->
+    <script src="https://unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+
+    <!-- My application bootstrap  -->
+
+    <script src="app/app.module.js"></script>
+    <script src="app/app.config.js"></script>
+
+    <!-- Reusable Blocks/Modules -->
+
+    <!-- core module -->
+    <script src="app/core/core.module.js"></script>
+    <script src="app/core/routerHelperProvider.js"></script>
+    <script src="app/core/question.service.js"></script>
+    <script src="app/core/data.service.js"></script>
+
+    <!-- layout -->
+    <script src="app/layout/layout.module.js"></script>
+
+    <!-- splash -->
+    <script src="app/splash/splash.module.js"></script>
+    <script src="app/splash/splash.route.js"></script>
+    <script src="app/splash/splash.js"></script>
+
+    <!-- questions -->
+    <script src="app/questions/questions.module.js"></script>
+    <script src="app/questions/questions.route.js"></script>
+    <script src="app/questions/questions.js"></script>
+
+
 </body>
 </html>

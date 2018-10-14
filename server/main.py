@@ -16,6 +16,7 @@ app = Flask(__name__)
 @app.route('/api/survey/create', methods=['POST'])
 def createSurvey():
     # Get data required to create a survey
+    eis_id = request.form['eisId']
     nbl_finish_time = int(request.form['nblFinishTime'])
     survey_send_delay = int(request.form['surveySendDelay'])
     first_name = request.form['firstName']
@@ -25,7 +26,8 @@ def createSurvey():
     # javascript timestamps are in milliseconds so divide
     nbl_time = datetime.fromtimestamp(nbl_finish_time / 1000)
     survey_send_time = nbl_time + timedelta(hours=survey_send_delay)
-    survey = Survey(first_name=first_name,
+    survey = Survey(eis_id=eis_id,
+                    first_name=first_name,
                     nbl_finish_timestamp=nbl_time,
                     survey_send_time=survey_send_time)
     survey.set_defaults()

@@ -80,8 +80,10 @@ class ApiTestCase(unittest.TestCase):
         time = 1500000000000
         delay = 24 # hours
         first_name = 'f'
+        eis_id = '123'
         expectedSendTime = datetime.fromtimestamp((time + delay * 60 * 60 * 1000)/1000)
         data = {
+            'eisId': eis_id,
             'firstName': first_name,
             'nblFinishTime': time,
             'surveySendDelay': delay
@@ -91,6 +93,7 @@ class ApiTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         # Should have saved that survey, so get it now and check it
         s = Survey.query().fetch(1)[0]
+        self.assertEqual(s.eis_id, eis_id)
         self.assertEqual(s.first_name, first_name)
         self.assertEqual(s.nbl_finish_timestamp, datetime.fromtimestamp(time / 1000))
         self.assertEqual(s.survey_send_time, expectedSendTime)

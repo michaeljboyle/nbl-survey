@@ -22,12 +22,13 @@ class Bodypart(ndb.Model):
 class Survey(ndb.Model):
     """A model for representing survey data."""
 
+    eis_id = ndb.StringProperty(required=True)
     # The time that the NBL run finished
-    nbl_finish_timestamp = ndb.DateTimeProperty()
+    nbl_finish_timestamp = ndb.DateTimeProperty(required=True)
     # The time the survey was complete
     survey_complete_timestamp = ndb.DateTimeProperty()
     # The time the survey is due to be sent to use
-    survey_send_time = ndb.DateTimeProperty()
+    survey_send_time = ndb.DateTimeProperty(required=True)
     # first name
     first_name = ndb.StringProperty()
     # Body parts

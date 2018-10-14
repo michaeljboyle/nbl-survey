@@ -246,8 +246,7 @@
           'Band-aids',
           'Topical analgesic'
         ],
-        'allowOther': true,
-        'nextq': 'exposure'
+        'allowOther': true
       }
     };
 
@@ -280,7 +279,7 @@
     }
 
     // Updates the locally stored question data
-    function update(qObj) {
+    function updateQuestion(qObj) {
       console.log('updating key:' + qObj.key + ' with ' + qObj.data.response);
       primaryQuestions[qObj.key].response = qObj.data.response;
       // If the pain question is set to false, reset all other pain questions to

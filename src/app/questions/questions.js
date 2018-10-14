@@ -87,7 +87,7 @@
         return;
       }
       console.log('submitting response with input ' + response);
-      dataService.update(questionObj);
+      dataService.updateQuestion(questionObj);
       visitedKeys.push(questionObj.key)
       if (questionObj.hasNextQuestion()) {
         var nextKey = questionObj.getNextQuestionKey(response);

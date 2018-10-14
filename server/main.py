@@ -33,15 +33,23 @@ def survey(survey_id):
         survey = ndb.Key(urlsafe=survey_id).get()
         return send_json(survey.jsonify())
 
+    if request.method == 'POST':
+        data = json.loads(request.form['data'])
+        survey = ndb.Key(urlsafe=survey_id).get()
+        
+        survey.update_from_json(data)
+        return survey.put().urlsafe()
+
 
 """ Creates a new survey entry to be sent out later """
 @app.route('/api/survey/create', methods=['POST'])
 def createSurvey():
     # Get data required to create a survey
-    eis_id = request.form['eisId']
-    nbl_finish_time = int(request.form['nblFinishTime'])
-    survey_send_delay = int(request.form['surveySendDelay'])
-    first_name = request.form['firstName']
+    data = json.loads(request.form['data'])
+    eis_id = data['eisId']
+    nbl_finish_time = int(data['nblFinishTime'])
+    survey_send_delay = int(data['surveySendDelay'])
+    first_name = data['firstName']
 
     # Calculate survey send time
     # Convert times

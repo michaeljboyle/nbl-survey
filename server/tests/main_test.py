@@ -61,6 +61,26 @@ class SurveyTestCase(unittest.TestCase):
         self.assertIn('head', j['bodyparts'])
         self.assertIn('cuts', j['bodyparts']['head'])
 
+    def testUpdateFromJson(self):
+        s = Survey(eis_id = 'a', first_name='b',
+                   nbl_finish_timestamp=datetime.now(),
+                   survey_send_time=datetime.now() + timedelta(hours=24))
+        s.set_defaults()
+        s.put()
+        headAffected = True
+        headPain = 5
+        j = {'pain': True, 'bodyparts': {'head': {'affected': headAffected, 'pain': headPain}}}
+        s.update_from_json(j)
+        s.put()
+        head = ''
+        for part in s.bodyparts:
+            if part.name == 'head':
+                head = part
+                break
+        self.assertEqual(s.pain, True)
+        self.assertEqual(head.affected, headAffected)
+        self.assertEqual(head.pain, headPain)
+
 # [START datastore_example_test]
 class ApiTestCase(unittest.TestCase):
 
@@ -99,7 +119,8 @@ class ApiTestCase(unittest.TestCase):
             'nblFinishTime': time,
             'surveySendDelay': delay
         }
-        response = self.app.post('/api/survey/create', data=data)
+        j = {'data': json.dumps(data)}
+        response = self.app.post('/api/survey/create', data=j)
 
         self.assertEqual(response.status_code, 200)
         # Should have saved that survey, so get it now and check it
@@ -120,6 +141,29 @@ class ApiTestCase(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['eisId'], 'a')
+
+    def testPostSurvey(self):
+        # First create one
+        data = {
+            'pain': True,
+            'bodyparts': {
+                'head': {
+                    'cuts': True
+                }
+            }
+        }
+
+        j = {'data': json.dumps(data)}
+
+        # Create a survey to be updated
+        s = Survey(eis_id = 'a', first_name='b',
+                   nbl_finish_timestamp=datetime.now(),
+                   survey_send_time=datetime.now() + timedelta(hours=24))
+        s.set_defaults()
+        key = s.put().urlsafe()
+
+        response = self.app.post('/api/survey/%s' % key, data=j)
+        self.assertEqual(response.status_code, 200)
 
         
 

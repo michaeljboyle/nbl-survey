@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from datetime import datetime
 
 BODYPART_NAMES = ['head', 'neck', 'torso', 'rShoulder', 'rArm', 'rHand',
                   'lShoulder', 'lArm', 'lHand', 'groin', 'rHip', 'rLeg',
@@ -81,3 +82,28 @@ class Survey(ndb.Model):
                 'comments': bodypart.comments
             }
         return obj
+
+    def update_from_json(self, j):
+        self.survey_complete_timestamp = datetime.now()
+        self.other_exposure = j.get('exposure')
+        self.pain = j.get('pain')
+        self.pain_medattention = j.get('pain-medattention')
+        self.pain_activitychange = j.get('pain-activitychange')
+        self.pain_suitperformance = j.get('pain-suitperformance')
+        self.pain_suitperformance_duration = j.get('pain-suitperformance-duration')
+
+        # now update bodyparts
+        bodyparts_data = j.get('bodyparts')
+        for part in self.bodyparts:
+            if (part.name in bodyparts_data and 
+                bodyparts_data[part.name].get('affected') == True):
+                part_data = bodyparts_data[part.name]
+                part.affected = True
+                part.location = part_data.get('location')
+                part.pain = part_data.get('pain')
+                part.irritation_or_hotspot = part_data.get('irritation')
+                part.numbness_or_tingling = part_data.get('numbness')
+                part.bruises_or_discoloration = part_data.get('bruises')
+                part.cuts_or_abrasions = part_data.get('cuts')
+                part.comments = part_data.get('comments')
+

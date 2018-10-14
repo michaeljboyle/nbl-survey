@@ -49,3 +49,35 @@ class Survey(ndb.Model):
     def set_defaults(self):
         for part_name in BODYPART_NAMES:
             self.bodyparts.append(Bodypart(name=part_name))
+
+    # Creates a dictionary of all properties for serialization to client
+    def jsonify(self):
+        obj = {
+            'eisId': self.eis_id,
+            'nblFinishTimestamp': self.nbl_finish_timestamp,
+            'surveyCompleteTimestamp': self.survey_complete_timestamp,
+            'firstName': self.first_name,
+            'exposure': self.other_exposure,
+            'pain': self.pain,
+            'pain-medattention': self.pain_medattention,
+            'pain-activitychange': self.pain_activitychange,
+            'pain-suitperformance': self.pain_suitperformance,
+            'pain-suitperformance-duration': self.pain_suitperformance_duration,
+            'fingernails': self.fingernails,
+            'treatments': self.treatments
+        }
+        # Add body parts
+        obj['bodyparts'] = {}
+        for bodypart in self.bodyparts:
+            name = bodypart.name
+            obj['bodyparts'][name] = {
+                'affected': bodypart.affected,
+                'location': bodypart.location,
+                'pain': bodypart.pain,
+                'irritation': bodypart.irritation_or_hotspot,
+                'numbness': bodypart.numbness_or_tingling,
+                'bruises': bodypart.bruises_or_discoloration,
+                'cuts': bodypart.cuts_or_abrasions,
+                'comments': bodypart.comments
+            }
+        return obj

@@ -3,13 +3,35 @@ import logging
 
 # [START imports]
 from flask import Flask, request
+from google.appengine.ext import ndb
 from survey import Survey
 from datetime import datetime, timedelta
+import json
 # [END imports]
 
 # [START create_app]
 app = Flask(__name__)
 # [END create_app]
+
+
+def send_json(r):
+    def date_converter(dt):
+        t0 = datetime(1970, 1, 1)
+        if isinstance(dt, datetime):
+            logging.info(dt)
+            timestamp = (dt - t0).total_seconds() * 1000  # for time in ms
+            logging.info(timestamp)
+            return timestamp
+    # self.response.headers['content-type'] = 'text/plain'
+    return json.dumps(r, default=date_converter)
+
+
+@app.route('/api/survey/<survey_id>', methods=['GET', 'POST'])
+def survey(survey_id):
+    # GET is a fetch
+    if request.method == 'GET':
+        survey = ndb.Key(urlsafe=survey_id).get()
+        return send_json(survey.jsonify())
 
 
 """ Creates a new survey entry to be sent out later """

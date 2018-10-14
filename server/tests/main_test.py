@@ -9,6 +9,7 @@ from survey import Survey
 from main import app
 
 from datetime import datetime, timedelta
+import json
 # [END imports]
 
 
@@ -49,6 +50,16 @@ class SurveyTestCase(unittest.TestCase):
         s = Survey()
         s.set_defaults()
         self.assertEqual(16, len(s.bodyparts))
+
+
+    def testJsonify(self):
+        s = Survey(eis_id = 'a', first_name='b',
+                   nbl_finish_timestamp=datetime.now(),
+                   survey_send_time=datetime.now() + timedelta(hours=24))
+        s.set_defaults()
+        j = s.jsonify()
+        self.assertIn('head', j['bodyparts'])
+        self.assertIn('cuts', j['bodyparts']['head'])
 
 # [START datastore_example_test]
 class ApiTestCase(unittest.TestCase):
@@ -97,5 +108,18 @@ class ApiTestCase(unittest.TestCase):
         self.assertEqual(s.first_name, first_name)
         self.assertEqual(s.nbl_finish_timestamp, datetime.fromtimestamp(time / 1000))
         self.assertEqual(s.survey_send_time, expectedSendTime)
+
+    def testFetchSurvey(self):
+        # First create one
+        s = Survey(eis_id = 'a', first_name='b',
+                   nbl_finish_timestamp=datetime.now(),
+                   survey_send_time=datetime.now() + timedelta(hours=24))
+        s.set_defaults()
+        key = s.put().urlsafe()
+        response = self.app.get('/api/survey/%s' % key)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['eisId'], 'a')
+
         
 

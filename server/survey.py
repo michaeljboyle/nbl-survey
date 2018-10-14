@@ -87,13 +87,15 @@ class Survey(ndb.Model):
 
     def update_from_json(self, j):
         self.survey_complete_timestamp = datetime.now()
-        self.other_exposure = j.get('exposure')
         question_data = j.get('questions')
+        self.other_exposure = question_data.get('exposure')
         self.pain = question_data.get('pain')
         self.pain_medattention = question_data.get('pain-medattention')
         self.pain_activitychange = question_data.get('pain-activitychange')
         self.pain_suitperformance = question_data.get('pain-suitperformance')
         self.pain_suitperformance_duration = question_data.get('pain-suitperformance-duration')
+        self.fingernails = question_data.get('fingernails')
+        self.treatments = question_data.get('treatments')
 
         # now update bodyparts
         bodyparts_data = j.get('bodyparts')

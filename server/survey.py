@@ -47,4 +47,4 @@ class Survey(ndb.Model):
     # Sets up a new survey with defaults
     def set_defaults(self):
         for part_name in BODYPART_NAMES:
-            self.bodyparts.push(Bodypart(name=part_name))
+            self.bodyparts.append(Bodypart(name=part_name))

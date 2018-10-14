@@ -58,6 +58,8 @@ class Survey(ndb.Model):
             'nblFinishTimestamp': self.nbl_finish_timestamp,
             'surveyCompleteTimestamp': self.survey_complete_timestamp,
             'firstName': self.first_name,
+        }
+        obj['questions'] = {
             'exposure': self.other_exposure,
             'pain': self.pain,
             'pain-medattention': self.pain_medattention,
@@ -86,11 +88,12 @@ class Survey(ndb.Model):
     def update_from_json(self, j):
         self.survey_complete_timestamp = datetime.now()
         self.other_exposure = j.get('exposure')
-        self.pain = j.get('pain')
-        self.pain_medattention = j.get('pain-medattention')
-        self.pain_activitychange = j.get('pain-activitychange')
-        self.pain_suitperformance = j.get('pain-suitperformance')
-        self.pain_suitperformance_duration = j.get('pain-suitperformance-duration')
+        question_data = j.get('questions')
+        self.pain = question_data.get('pain')
+        self.pain_medattention = question_data.get('pain-medattention')
+        self.pain_activitychange = question_data.get('pain-activitychange')
+        self.pain_suitperformance = question_data.get('pain-suitperformance')
+        self.pain_suitperformance_duration = question_data.get('pain-suitperformance-duration')
 
         # now update bodyparts
         bodyparts_data = j.get('bodyparts')

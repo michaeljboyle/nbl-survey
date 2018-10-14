@@ -69,7 +69,7 @@ class SurveyTestCase(unittest.TestCase):
         s.put()
         headAffected = True
         headPain = 5
-        j = {'pain': True, 'bodyparts': {'head': {'affected': headAffected, 'pain': headPain}}}
+        j = {'questions': {'pain': True}, 'bodyparts': {'head': {'affected': headAffected, 'pain': headPain}}}
         s.update_from_json(j)
         s.put()
         head = ''
@@ -145,7 +145,7 @@ class ApiTestCase(unittest.TestCase):
     def testPostSurvey(self):
         # First create one
         data = {
-            'pain': True,
+            'questions': {'pain': True},
             'bodyparts': {
                 'head': {
                     'cuts': True

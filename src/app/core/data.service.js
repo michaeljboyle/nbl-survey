@@ -253,7 +253,7 @@
     var service = {
       'getQuestion': getQuestion,
       'getStartingQuestion': getStartingQuestion,
-      'update': update
+      'updateQuestion': updateQuestion
     };
 
     return service;

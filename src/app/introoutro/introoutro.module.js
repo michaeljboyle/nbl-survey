@@ -2,5 +2,5 @@
   'use strict';
 
   angular
-    .module('nblsurvey.introoutro', []);
+    .module('nblsurvey.introoutro', ['angularMoment']);
 })();

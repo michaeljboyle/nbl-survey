@@ -10,6 +10,7 @@
       'nblsurvey.layout',
       'nblsurvey.introoutro',
       'nblsurvey.questions',
-      'nblsurvey.body'
+      'nblsurvey.body',
+      'nblsurvey.admin'
     ]);
 })();

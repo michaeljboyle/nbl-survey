@@ -48,17 +48,17 @@
     <!-- Bottom buttons -->
     <!-- Yes/no buttons -->
     <div ng-if="vm.qtype == 'yesno'" flex="15" layout="row">
-        <div flex="50" class="colorgrey bottombtn" layout="column" layout-align="center center" ng-click="vm.submitResponse(false)">
+        <div flex="50" class="colorgrey bottombtn" layout="column" layout-align="center center" ng-click="vm.answer(false)">
             NO
         </div>
-        <div flex="50" class="colorred bottombtn" layout="column" layout-align="center center" ng-click="vm.submitResponse(true)">
+        <div flex="50" class="colorred bottombtn" layout="column" layout-align="center center" ng-click="vm.answer(true)">
             YES
         </div>
     </div>
 
     <!--  Text/number/multiselect button -->
     <div ng-if="vm.qtype != 'yesno'" flex="15" layout="row">
-        <div flex class="colorgrey bottombtn" layout="column" layout-align="center center" ng-click="vm.submitResponse(vm.input)">
+        <div flex class="colorgrey bottombtn" layout="column" layout-align="center center" ng-click="vm.answer(vm.input)">
             NEXT
         </div>
     </div>

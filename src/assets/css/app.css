@@ -31,3 +31,18 @@
 .md-input-has-value.textInput > textarea {
   font-size: 30px;
   height: 30px; }
+
+.human-body {
+  position: relative;
+  display: block; }
+
+.selected path {
+  fill: #b3425cff; }
+
+.selected polygon {
+  fill: #b3425cff; }
+
+.human-body svg {
+  position: absolute;
+  left: 0%;
+  fill: #0b5394ff; }

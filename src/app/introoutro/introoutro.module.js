@@ -2,5 +2,5 @@
   'use strict';
 
   angular
-    .module('nblsurvey.splash', []);
+    .module('nblsurvey.introoutro', []);
 })();

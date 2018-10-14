@@ -5,15 +5,14 @@
     .module('nblsurvey.core')
     .factory('dataService', dataService);
 
-  dataService.$inject = ['$http', '$log', '$q', 'Question'];
+  dataService.$inject = ['$http', '$log', '$q', 'Question', 'Bodypart'];
 
   /* @ngInject */
-  function dataService($http, $log, $q, Question) {
+  function dataService($http, $log, $q, Question, Bodypart) {
     var bodyData = {
       'head': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -22,8 +21,7 @@
       },
       'neck': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -32,8 +30,7 @@
       },
       'torso': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -42,8 +39,7 @@
       },
       'rShoulder': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -52,8 +48,7 @@
       },
       'rArm': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -62,8 +57,7 @@
       },
       'rHand': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -72,8 +66,7 @@
       },
       'lShoulder': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -82,8 +75,7 @@
       },
       'lArm': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -92,8 +84,7 @@
       },
       'lHand': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -102,8 +93,7 @@
       },
       'rHip': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -112,8 +102,7 @@
       },
       'rLeg': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -122,8 +111,7 @@
       },
       'rFoot': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -132,8 +120,7 @@
       },
       'lHip': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -142,8 +129,7 @@
       },
       'lLeg': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -152,8 +138,7 @@
       },
       'lFoot': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -162,8 +147,7 @@
       },
       'groin': {
         'location': '',
-        'pain': false,
-        'severity': 0,
+        'pain': 0,
         'irritation': false,
         'numbness': false,
         'bruises': false,
@@ -251,12 +235,35 @@
     };
 
     var service = {
+      'getBodypart': getBodypart,
       'getQuestion': getQuestion,
+      'getSelectedBodyparts': getSelectedBodyparts,
       'getStartingQuestion': getStartingQuestion,
-      'updateQuestion': updateQuestion
+      'loadSurvey': loadSurvey,
+      'resetBodyData': resetBodyData,
+      'saveSelectedBodyparts': saveSelectedBodyparts,
+      'updateBodypart': updateBodypart,
+      'updateQuestion': updateQuestion,
+      'uploadData': uploadData
     };
 
+    var selectedBodyparts = [];
+
     return service;
+
+    /**
+     * Returns the appropriate BodypartObject from the key provided
+     * @param {string} key The key for the bodypart object
+     * @return {Object} A bodypart object
+     */
+    function getBodypart(key) {
+      if (key in bodyData) {
+        return Bodypart.build(key, bodyData[key]);
+      }
+      else {
+        throw 'Key not found';
+      }
+    }
 
     /**
      * Returns the appropriate QuestionObject from the key provided
@@ -278,6 +285,58 @@
       return getQuestion('exposure');
     }
 
+    // Gets bodyparts that have been selected and modified
+    function getSelectedBodyparts() {
+      return selectedBodyparts;
+    }
+
+    /**
+     * Gets the survey with this unique ID from the server, then sets local
+     * data to reflect it.
+     * @return {Object} An object containing identifying info for display
+     */
+    function loadSurvey(id) {
+      return $http.get('/api/survey/' + id)
+        .then(getSurveyComplete)
+        .catch(function(message) {
+          $log.error(message);
+        });
+
+      function getSurveyComplete(data, status, headers, config) {
+        $log.log('Retrieved survey');
+        $log.info(data.data);
+        bodyData = data.data.bodyData;
+        primaryQuestions = data.data.questions;
+        return {'name': data.data.name, 'endTime': data.data.endTime};
+      }
+    }
+
+
+    // Resets body part data to baseline
+    function resetBodyData(key) {
+      bodyData[key] = {
+        'location': '',
+        'pain': 0,
+        'irritation': false,
+        'numbness': false,
+        'bruises': false,
+        'cuts': false,
+        'comments': ''
+      };
+    };
+
+    // Saves bodyparts that have been selected and modified
+    function saveSelectedBodyparts(parts) {
+      selectedBodyparts = parts;
+    }
+
+    // Updates the locally stored bodypart data
+    function updateBodypart(bodyObj) {
+      console.log('updating key:' + bodyObj.key);
+      bodyData[bodyObj.key] = bodyObj.data;
+      console.log(bodyData);
+    }
+
     // Updates the locally stored question data
     function updateQuestion(qObj) {
       console.log('updating key:' + qObj.key + ' with ' + qObj.data.response);
@@ -290,7 +349,26 @@
         primaryQuestions['pain-suitperformance'].response = false;
         primaryQuestions['pain-suitperformance-duration'].response = 0;
       }
+      // If subsequent suit test is answered negative, any saved value for
+      // duration should be zero'd
+      if (qObj.key == 'pain-suitperformance' && qObj.data.response === false) {
+        primaryQuestions['pain-suitperformance-duration'].response = 0;
+      }
       console.log(primaryQuestions);
+    }
+
+    // Save dataa to backend
+    function uploadData() {
+      return $http.post('/api/post/' + surveyId)
+        .then(postComplete)
+        .catch(function(message) {
+          $log.error(message);
+          throw message;
+        });
+
+      function postComplete(data, status, headers, config) {
+        return data.data;
+      }
     }
   }
 })();

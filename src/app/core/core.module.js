@@ -6,7 +6,7 @@
       /* 3rd party modules */
       // 'firebase',
       'ui.router',
-      // 'angularMoment',
+      'angularMoment',
       // 'ngMessages',
       // 'ngStorage',
       'ngMaterial',

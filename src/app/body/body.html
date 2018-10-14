@@ -1,0 +1,110 @@
+<div layout="column" layout-fill>
+    <div flex="10" layout="row" ng-show="true">
+        <div flex class="colorblack bottombtn" layout="column" layout-align="center center" ng-click="vm.back()">
+            BACK
+        </div>
+    </div>
+    <div flex layout-padding layout="column">
+
+        <!-- <img src="assets/img/body.svg"> -->
+        <!-- Human Body //-->
+        <div flex class="human-body">
+
+            <svg width="100%" height="100%" viewBox="-73 0 205 496" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g ng-click="vm.select('head')" ng-class="{selected: vm.isSelected('head')}" class="head" id="head" stroke="none" stroke-width="1">
+                    <path d="M49.13,40.725 L49.238,28.95 L28.078,14.208 L8.123,26.133 L8.09,40.19 L4.85,40.405 L6.312,50.137 L11.52,51.947 L13.88,63.577 L23.6,74.595 L34.456,74.271 L44.016,63.901 L45.934,51.949 L51.141,50.139 L52.483,40.622 L49.13,40.725 Z M6.045,38.885 L5.788,25.065 L28.226,11.9 L51.844,27.655 L51.628,38.025 L56.604,20.94 L42.556,2.376 L25.49,0 L10.803,3.673 L0.002,24.415 L6.045,38.885 Z"></path>
+                </g>
+                <g ng-click="vm.select('neck')" ng-class="{selected: vm.isSelected('neck')}" class="neck" id="neck" stroke="none" stroke-width="1" transform="translate(14.000000, 68.000000)">
+                    <polygon id="Path" points="1.92 0.5 10.72 13.046 14.69 27.03 5.436 19.65 0.814 3.802"></polygon>
+                    <polygon id="Path" points="29.02 0.5 20.22 13.046 16.244 27.034 25.498 19.654 30.12 3.806"></polygon>
+                </g>
+                <g ng-click="vm.select('torso')" ng-class="{selected: vm.isSelected('torso')}" class="torso" id="torso" stroke="none" stroke-width="1" transform="translate(-14.000000, 94.000000)">
+                    <path d="M19.325,0 L10.1,16.488 L0,21.544 L6.15,26.38 L10.982,40.45 L22.182,45.066 L40.032,36.238 L35.58,1.538 L19.325,0 Z M67.259,0 L76.484,16.488 L86.584,21.544 L80.434,26.38 L75.601,40.45 L64.401,45.066 L46.557,36.238 L51.007,1.538 L67.259,0 Z"></path>
+                    <path d="M24.256,49.502 L40.856,42.002 L40.356,54.162 L25.413,61.824 L24.256,49.502 Z M13.934,58.402 L20.834,62.25 L20.034,53.134 L13.934,58.402 Z M19.551,49.67 L6.326,44.162 L11.306,57.612 L19.551,49.67 Z M11.381,58.937 L20.396,64.451 L21.936,75.479 L13.141,69.744 L11.381,58.937 Z M26.911,64.827 L27.243,73.489 L39.529,70.824 L40.193,58.998 L26.911,64.827 Z M38.9324292,124.655244 L38.286,118.074 L38.206,97.544 L26.552,91.808 L25.3303863,124.655244 L38.9324292,124.655244 Z M46.3303863,124.655244 L46.9768154,118.074 L47.0568154,97.544 L58.7108154,91.808 L59.9324292,124.655244 L46.3303863,124.655244 Z M27.741,77.652 L27.576,88.312 L39.363,91.478 L39.529,74.821 L27.741,77.652 Z M13.581,72.397 L21.496,77.912 L22.596,89.162 L13.796,82.102 L13.581,72.397 Z M22.371,95.137 L12.698,87.857 L11.858,97.637 L5,110.302 L15.564,124.896 L21.064,125.779 L23.044,105.044 L22.371,95.137 Z M61.006,49.5 L44.406,42 L44.906,54.16 L59.848,61.82 L61.006,49.5 Z M71.326,58.4 L64.426,62.247 L65.226,53.131 L71.326,58.4 Z M65.709,49.667 L78.936,44.16 L73.956,57.607 L65.709,49.667 Z M73.879,58.934 L64.864,64.448 L63.324,75.478 L72.124,69.742 L73.879,58.934 Z M58.349,64.824 L58.017,73.486 L45.732,70.821 L45.068,58.994 L58.349,64.824 Z M57.519,77.65 L57.685,88.31 L45.899,91.478 L45.733,74.821 L57.519,77.65 Z M71.679,72.394 L63.764,77.908 L62.664,89.158 L71.458,82.098 L71.679,72.394 Z M62.889,95.137 L72.562,87.857 L73.402,97.637 L80.264,110.297 L69.7,124.894 L64.2,125.777 L62.225,105.037 L62.889,95.137 Z"></path>
+                </g>
+                <g ng-click="vm.select('rShoulder')" ng-class="{selected: vm.isSelected('rShoulder')}" class="rShoulder" id="rShoulder" stroke="none" stroke-width="1" transform="translate(-26.000000, 75.000000)">
+                    <polygon id="Path" points="38.754 0 40.734 9.232 29.081 12.089 21.607 9.452"></polygon>
+                    <path d="M17.515,10.54 L13.472,8.354 L0.816,22.354 L0.754,27.679 C0.754,27.679 17.274,10.664 17.518,10.539 L17.515,10.54 Z" id="Path" ></path>
+                    <path d="M18.8,11.12 C18.81,11.4 1.038,30.042 1.038,30.042 L0.5,46.599 L6.657,36.049 L18.527,30.993 L26.884,15.604 L18.8,11.12 Z" id="Path"></path>
+                </g>
+                <g ng-click="vm.select('lShoulder')" ng-class="{selected: vm.isSelected('lShoulder')}" class="lShoulder" id="lShoulder" stroke="none" stroke-width="1" transform="translate(43.000000, 75.000000)">
+                    <polygon id="Path" points="2.786 0 0.806 9.232 12.459 12.089 19.933 9.452"></polygon>
+                    <path d="M24.024,10.54 L28.068,8.353 L40.724,22.353 L40.794,27.683 C40.794,27.683 24.27,10.664 24.025,10.539 L24.024,10.54 Z" id="Path" ></path>
+                    <path d="M22.739,11.12 C22.731,11.4 40.501,30.042 40.501,30.042 L41.038,46.599 L34.881,36.049 L23.01,30.992 L14.658,15.604 L22.739,11.12 Z" id="Path"></path>
+                </g>
+                <g ng-click="vm.select('rArm')" ng-class="{selected: vm.isSelected('rArm')}" class="rArm" id="rArm" stroke="none" stroke-width="1" transform="translate(-49.000000, 119.000000)">
+                    <path d="M21.11,56.485 C20.9864031,56.6173172 20.8422054,56.728758 20.683,56.815 L21.618,65.039 L34.595,51.149 L35.795,42.191 C30.6140219,46.6527628 25.7099221,51.426287 21.11,56.485 L21.11,56.485 Z" id="Path"></path>
+                    <polygon id="Path" points="22.497 69.007 4.427 117.917 10.184 119.25 29.309 79.81 32.827 57.763"></polygon>
+                    <polygon id="Path" points="17.219 50.047 19.857 68.787 2.657 114.81 0 113.035 6.644 77.517"></polygon>
+                    <path d="M36.024,37.724 C36.1483989,37.6262694 36.2852711,37.5455585 36.431,37.484 L40.097,10.139 L33.06,0 L25.802,10.58 L19.642,47.62 L20.208,52.593 C25.1149441,47.2646709 30.3978384,42.2952479 36.016,37.723 L36.024,37.724 Z" id="Path" ></path>
+                    <polygon id="Path" points="22.278 8.817 18.978 44.093 16.778 17.855"></polygon>
+                </g>
+                <g ng-click="vm.select('rHand')" ng-class="{selected: vm.isSelected('rHand')}" class="rHand" id="rHand" stroke="none" stroke-width="1" transform="translate(-73.000000, 234.000000)">
+                    <polygon id="Path" points="21.255 0 24.135 6.9 32.547 8.235 33.211 20.693 28.784 38.493 25.906 38.273 28.706 26.426 25.716 26.342 21.04 38.942 17.496 38.496 21.896 25.76 18.824 25.176 12.846 38.719 8.418 38.274 14.506 24.174 12.406 22.924 4.878 34.936 1.114 34.491 12.4 12.902 11.293 11.122 0.665 15.572 0 13.126 8.635 5.34"></polygon>
+                </g>
+                <g ng-click="vm.select('lArm')" ng-class="{selected: vm.isSelected('lArm')}" class="lArm" id="lArm" stroke="none" stroke-width="1" transform="translate(67.000000, 119.000000)">
+                    <path d="M19.234,56.487 C19.357295,56.6192312 19.5011495,56.7306678 19.66,56.817 L18.726,65.039 L5.749,51.149 L4.549,42.191 C9.72860653,46.6528871 14.631368,51.4264089 19.23,56.485 L19.234,56.487 Z" id="Path"></path>
+                    <polygon id="Path" points="17.844 69.007 35.917 117.917 30.159 119.25 11.027 79.81 7.507 57.76"></polygon>
+                    <polygon id="Path" points="23.124 50.047 20.484 68.787 37.684 114.81 40.342 113.035 33.699 77.517"></polygon>
+                    <path d="M4.324,37.724 C4.19931263,37.6266924 4.06249837,37.5460157 3.917,37.484 L0.251,10.139 L7.29,0 L14.548,10.58 L20.708,47.62 L20.142,52.593 C15.2305692,47.2641638 9.94298345,42.2947288 4.32,37.723 L4.324,37.724 Z" id="Path"></path>
+                    <polygon id="Path" points="18.068 8.817 21.368 44.093 23.568 17.855"></polygon>
+                </g>
+                <g ng-click="vm.select('lHand')" ng-class="{selected: vm.isSelected('lHand')}" class="lHand" id="lHand" stroke="none" stroke-width="1" transform="translate(98.000000, 234.000000)">
+                    <polygon id="Shape" points="12.745 0 9.865 6.9 1.453 8.235 0.789 20.693 5.216 38.493 8.094 38.273 5.294 26.426 8.284 26.342 12.96 38.942 16.504 38.496 12.104 25.76 15.176 25.176 21.154 38.719 25.582 38.274 19.494 24.174 21.594 22.924 29.122 34.936 32.886 34.491 21.6 12.902 22.707 11.122 33.335 15.572 34 13.125 25.365 5.339"></polygon>
+                </g>
+                <g ng-click="vm.select('groin')" ng-class="{selected: vm.isSelected('groin')}" class="groin" id="groin" stroke="none" stroke-width="1" transform="translate(2.000000, 220.000000)">
+                    <polygon id="Path" points="19.132 22.334 19.25 22.186 18.457 20.162 1.912 2.002 0.67 1.562 11.654 29.94"></polygon>
+                    <polygon id="Path" points="12.877 33.1 19.689 50.7 21.963 29.104 20.619 25.674"></polygon>
+                    <polygon id="Path" points="34.492 22.336 34.374 22.186 35.167 20.163 51.712 2.003 52.952 1.563 41.972 29.94"></polygon>
+                    <polygon id="Path" points="40.747 33.1 33.935 50.7 31.661 29.105 33.005 25.675"></polygon>
+                    <polygon id="Path-3" points="9.80414909 0.454099831 22.8771167 0.454099831 25.6754437 23.7026269 9.29816079 3.59873054"></polygon>
+                    <polygon id="Path-3-Copy" transform="translate(35.888642, 12.078363) scale(-1, 1) translate(-35.888642, -12.078363) " points="28.2059891 0.454099831 41.2789567 0.454099831 44.0772836 23.7026269 27.7000008 3.59873054"></polygon>
+                </g>
+                <g ng-click="vm.select('lHip')" ng-class="{selected: vm.isSelected('lHip')}" class="lHip" id="lHip" stroke="none" stroke-width="1" transform="translate(46.000000, 209.000000)">
+                    <polygon id="Path" points="20.115 0 19.289 21.375 26.319 63.683 29.625 29.528"></polygon>
+                    <polygon id="Path-2-Copy" transform="translate(10.285870, 32.370162) scale(-1, 1) translate(-10.285870, -32.370162) " points="20.1849671 42.6696541 0.732244698 59.2813224 0.38677251 46.8301793 2.80274028 27.5552255 4.59652204 25.1628332 4.59652204 5.45900087"></polygon>
+                </g>
+                <g ng-click="vm.select('rHip')" ng-class="{selected: vm.isSelected('rHip')}" class="rHip" id="rHip" stroke="none" stroke-width="1" transform="translate(-18.000000, 209.000000)">
+                    <polygon id="Path" points="9.507 0.003 10.334 21.376 3.306 63.684 0 29.529"></polygon>
+                    <polygon id="Path-2" points="29.1849671 42.6696541 9.7322447 59.2813224 9.38677251 46.8301793 11.8027403 27.5552255 13.596522 25.1628332 13.596522 5.45900087"></polygon>
+                </g>
+                <g ng-click="vm.select('lLeg')" ng-class="{selected: vm.isSelected('lLeg')}" class="lLeg" id="lLeg" stroke="none" stroke-width="1" transform="translate(53.500000, 359.000000) scale(-1, 1) translate(-53.500000, -359.000000) translate(35.000000, 253.000000)">
+                    <polygon id="Path" points="14.155 94.653 13.491 100.643 18.138 106.413 19.688 115.513 22.788 116.843 25.443 103.088 27.213 98.208 25.663 95.101"></polygon>
+                    <polygon id="Path" points="34.737 95.097 31.417 104.415 24.335 118.17 26.105 130.817 31.195 116.617 35.4 108.635"></polygon>
+                    <polygon id="Path" points="8.18 82.452 13.27 109.742 9.95 107.965 7.294 116.84"></polygon>
+                    <polygon id="Path" points="30.975 124.826 29.425 129.706 26.105 150.34 25.663 177.85 30.313 204.697 30.09 170.307 34.96 156.553 35.623 141.466"></polygon>
+                    <polygon id="Path" points="20.352 137.25 21.458 178.517 30.311 211.797 20.683 207.247 4.638 149.447 10.171 113.063"></polygon>
+                    <polygon id="Path" points="3.407 17.92 4.234 43.26 17.05 78.517 13.122 88.653 0.512 44.143"></polygon>
+                    <polygon id="Path"  points="27.972 30.7 28.317 31.526 34.787 47.006 30.61 85.348 24.016 81.822 29.731 46.122"></polygon>
+                    <polygon id="Path" points="20.359 6.51101942 23.252 15.717 26.559 41.717 20.359 78.297 6.922 41.056 6.07977958 18.7092479"></polygon>
+                    <polygon id="Path"  points="27.6615367 0.733504632 23.0458799 4.56758501 26.352 12.635 36.275 43.485 35.242 22.11"></polygon>
+                </g>
+                <g ng-click="vm.select('rLeg')" ng-class="{selected: vm.isSelected('rLeg')}" class="rLeg" id="rLeg" stroke="none" stroke-width="1" transform="translate(-15.000000, 253.000000)">
+                    <polygon id="Path" points="14.155 94.653 13.491 100.643 18.138 106.413 19.688 115.513 22.788 116.843 25.443 103.088 27.213 98.208 25.663 95.101"></polygon>
+                    <polygon id="Path" points="34.737 95.097 31.417 104.415 24.335 118.17 26.105 130.817 31.195 116.617 35.4 108.635"></polygon>
+                    <polygon id="Path" points="8.18 82.452 13.27 109.742 9.95 107.965 7.294 116.84"></polygon>
+                    <polygon id="Path" points="30.975 124.826 29.425 129.706 26.105 150.34 25.663 177.85 30.313 204.697 30.09 170.307 34.96 156.553 35.623 141.466"></polygon>
+                    <polygon id="Path" points="20.352 137.25 21.458 178.517 30.311 211.797 20.683 207.247 4.638 149.447 10.171 113.063"></polygon>
+                    <polygon id="Path" points="3.407 17.92 4.234 43.26 17.05 78.517 13.122 88.653 0.512 44.143"></polygon>
+                    <polygon id="Path" points="27.972 30.7 28.317 31.526 34.787 47.006 30.61 85.348 24.016 81.822 29.731 46.122"></polygon>
+                    <polygon id="Path" points="20.359 6.51101942 23.252 15.717 26.559 41.717 20.359 78.297 6.922 41.056 6.07977958 18.7092479"></polygon>
+                    <polygon id="Path" points="27.6615367 0.733504632 23.0458799 4.56758501 26.352 12.635 36.275 43.485 35.242 22.11"></polygon>
+                </g>
+                <g ng-click="vm.select('lFoot')" ng-class="{selected: vm.isSelected('lFoot')}" class="lFoot" id="lFoot" stroke="none" stroke-width="1" transform="translate(36.000000, 465.000000)">
+                    <polygon id="Path" points="0.342 5.787 1.005 24.202 2.551 30.637 7.199 30.637 8.527 26.2 10.077 25.978 9.744 30.415 15.607 28.637 17.157 27.75 23.795 26.308 24.017 21.094 17.599 10.226 13.173 4.679 2.329 0.242"></polygon>
+                </g>
+                <g ng-click="vm.select('rFoot')" ng-class="{selected: vm.isSelected('rFoot')}" class="rFoot" id="rFoot" stroke="none" stroke-width="1" transform="translate(-3.000000, 465.000000)">
+                    <polygon id="Shape" points="24.286 5.786 23.622 24.201 22.072 30.636 17.425 30.636 16.098 26.199 14.548 25.977 14.88 30.414 9.016 28.636 7.466 27.749 0.826 26.307 0.606 21.093 7.024 10.223 11.45 4.675 22.294 0.238"></polygon>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Bottom buttons -->
+    <!--  Text/number/multiselect button -->
+    <div flex="15" layout="row">
+        <div flex class="colorgrey bottombtn" layout="column" layout-align="center center" ng-click="vm.next()">
+            NEXT
+        </div>
+    </div>
+</div>

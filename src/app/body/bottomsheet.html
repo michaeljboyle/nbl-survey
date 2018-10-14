@@ -1,0 +1,31 @@
+<md-bottom-sheet class="md-list md-has-header" layout="column">
+    <div layout="row" layout-align="space-between center">
+        <div><h4 class="md-title">{{ vm.part.title }}</h4></div>
+        <div><md-button class="md-raised" ng-click="vm.clear()">Clear</md-button></div>
+    </div>
+    <div layout>
+        <md-input-container flex>
+            <label>Location</label>
+            <input type="text" ng-model="vm.part.data.location">
+        </md-input-container>
+    </div>
+    <div layout="row" layout-align="center center">
+        <div layout-padding class="md-subhead">Pain</div>
+        <md-slider flex class="md-warn" md-discrete ng-model="vm.part.data.severity" step="1" min="0" max="10"></md-slider>
+    </div>
+    <div layout="row" layout-wrap>
+        <md-checkbox ng-model="vm.part.data.irritation">Irritation/Hotspot</md-checkbox>
+        <md-checkbox ng-model="vm.part.data.numbness">Numbness/Tingling</md-checkbox>
+        <md-checkbox ng-model="vm.part.data.bruises">Bruises/Discoloration</md-checkbox>
+        <md-checkbox ng-model="vm.part.data.cuts">Cuts/Abrasions</md-checkbox>
+    </div>
+    <div layout>
+        <md-input-container flex>
+            <label>Additional comments</label>
+            <input type="text" ng-model="vm.part.data.comments">
+        </md-input-container>
+    </div>
+    <div>
+        <md-button class="md-raised md-primary" ng-click="vm.save()">Save</md-button>
+    </div>
+</md-bottom-sheet>

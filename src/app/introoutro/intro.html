@@ -1,9 +1,9 @@
 <div layout="column" layout-fill>
     <div flex layout="column" layout-align="center center" layout-padding>
-        <h1 class="md-display-2 center">Welcome ****!</h1>
+        <h1 class="md-display-2 center">Welcome {{ vm.idData.name }}!</h1>
         <h2 class="md-headline center">This survey will ask you questions about your NBL run on:</h2>
-        <h3 class="md-title center">***, ***<br/>
-            At *** (*** hours ago)</h3>
+        <h3 class="md-title center"><span>{{vm.idData.endTime | amDateFormat:'dddd, MMMM Do YYYY'}}</span><br/>
+            At <span>{{vm.idData.endTime | amDateFormat:'hh:mm'}}</span> (<span am-time-ago="vm.idData.endTime"></span>)</h3>
     </div>
     <div flex="15" layout="row" layout-align="center center" class="colorgrey bottombtn" ui-sref="questions">
         START

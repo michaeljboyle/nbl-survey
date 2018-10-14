@@ -8,7 +8,8 @@
 
       /* Feature areas */
       'nblsurvey.layout',
-      'nblsurvey.splash',
-      'nblsurvey.questions'
+      'nblsurvey.introoutro',
+      'nblsurvey.questions',
+      'nblsurvey.body'
     ]);
 })();

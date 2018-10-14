@@ -19,6 +19,7 @@
 
     vm.$onInit = onInit;
     vm.allowOther = allowOther;
+    vm.answer = answer;
     vm.back = back;
     vm.hasPrevious = hasPrevious;
     vm.input = null;
@@ -26,7 +27,7 @@
     vm.otherChecked = false;
     vm.qtype = null
     vm.questionText = null;
-    vm.submitResponse = submitResponse;
+    vm.saveResponse = saveResponse;
     vm.toggleOther = toggleOther;
     vm.toggleSelection = toggleSelection;
     vm.options = [];
@@ -44,11 +45,25 @@
       return questionObj.allowOther();
     }
 
+    // This submit/saves the answer and takes care of navigation to the next
+    function answer(response) {
+      saveResponse(response);
+      visitedKeys.push(questionObj.key);
+      console.log('just visited: ' + visitedKeys);
+      if (questionObj.hasNextQuestion()) {
+        var nextKey = questionObj.getNextQuestionKey(response);
+        setQuestion(dataService.getQuestion(nextKey));
+      }
+      else {
+        $state.go('body');
+      }
+    }
+
     // Goes to the previous question
     function back() {
+      console.log('GOING BACK: ' + visitedKeys);
       var previousKey = visitedKeys.pop()
       console.log('getting previous question with key: ' + previousKey);
-      submitResponse(vm.input);
       setQuestion(dataService.getQuestion(previousKey));
     }
 
@@ -75,7 +90,7 @@
       vm.other = '';
     }
 
-    function submitResponse(response) {
+    function saveResponse(response) {
       if (allowOther() && vm.otherChecked && vm.other !== '') {
         response.push(vm.other);
       }
@@ -88,14 +103,6 @@
       }
       console.log('submitting response with input ' + response);
       dataService.updateQuestion(questionObj);
-      visitedKeys.push(questionObj.key)
-      if (questionObj.hasNextQuestion()) {
-        var nextKey = questionObj.getNextQuestionKey(response);
-        setQuestion(dataService.getQuestion(nextKey));
-      }
-      else {
-        $state.go('body');
-      }
     }
 
     function setQuestion(qObj) {

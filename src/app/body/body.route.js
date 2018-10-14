@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('nblsurvey.splash')
+    .module('nblsurvey.body')
     .run(appRun);
 
   appRun.$inject = ['routerHelper'];
@@ -13,11 +13,11 @@
     function getStates() {
       return [
         {
-          state: 'splash',
+          state: 'body',
           config: {
-            name: 'splash',
-            url: '/',
-            component: 'splashComponent'
+            name: 'body',
+            url: '/body',
+            component: 'bodyComponent'
           }
         }
       ];

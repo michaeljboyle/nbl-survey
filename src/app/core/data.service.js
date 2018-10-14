@@ -248,6 +248,7 @@
     };
 
     var selectedBodyparts = [];
+    var surveyId = '';
 
     return service;
 
@@ -296,6 +297,7 @@
      * @return {Object} An object containing identifying info for display
      */
     function loadSurvey(id) {
+      surveyId = id; // for safekeeping to make requests later
       return $http.get('/api/survey/' + id)
         .then(getSurveyComplete)
         .catch(function(message) {
@@ -305,9 +307,9 @@
       function getSurveyComplete(data, status, headers, config) {
         $log.log('Retrieved survey');
         $log.info(data.data);
-        bodyData = data.data.bodyData;
-        primaryQuestions = data.data.questions;
-        return {'name': data.data.name, 'endTime': data.data.endTime};
+        // bodyData = data.data.bodyparts;
+        // updateLocalQuestions(data.data.questions);
+        return {'name': data.data.firstName, 'endTime': data.data.nblFinishTimestamp};
       }
     }
 
@@ -359,7 +361,14 @@
 
     // Save dataa to backend
     function uploadData() {
-      return $http.post('/api/post/' + surveyId)
+      // First serialize questions
+      var data = {'questions': {}};
+      for (var key in primaryQuestions) {
+        data['questions'][key] = primaryQuestions[key]['response'];
+      }
+      data['bodyparts'] = bodyData;
+      
+      return $http.post('/api/survey/' + surveyId, data)
         .then(postComplete)
         .catch(function(message) {
           $log.error(message);

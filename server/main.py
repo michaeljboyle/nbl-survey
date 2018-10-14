@@ -34,7 +34,8 @@ def survey(survey_id):
         return send_json(survey.jsonify())
 
     if request.method == 'POST':
-        data = json.loads(request.form['data'])
+        data = json.loads(request.data)
+        logging.info(data)
         survey = ndb.Key(urlsafe=survey_id).get()
         
         survey.update_from_json(data)
@@ -60,6 +61,15 @@ def createSurvey():
                     first_name=first_name,
                     nbl_finish_timestamp=nbl_time,
                     survey_send_time=survey_send_time)
+    survey.set_defaults()
+    return survey.put().urlsafe()
+
+@app.route('/api/test')
+def createDummy():
+    survey = Survey(eis_id='123',
+                    first_name='Michael',
+                    nbl_finish_timestamp=datetime.fromtimestamp(1539546879),
+                    survey_send_time=datetime.fromtimestamp(1539719679))
     survey.set_defaults()
     return survey.put().urlsafe()
 

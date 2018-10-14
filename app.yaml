@@ -10,8 +10,9 @@ handlers:
   static_files: src/index.html
   upload: src/index.html
 
-- url: /app
-  static_dir: src/app
+- url: /src
+  static_dir: src/
 
-- url: /assets
-  static_dir: src/assets
+libraries:
+- name: ssl
+  version: latest

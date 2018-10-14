@@ -98,10 +98,9 @@ class Survey(ndb.Model):
         # now update bodyparts
         bodyparts_data = j.get('bodyparts')
         for part in self.bodyparts:
-            if (part.name in bodyparts_data and 
-                bodyparts_data[part.name].get('affected') == True):
+            if (part.name in bodyparts_data):
                 part_data = bodyparts_data[part.name]
-                part.affected = True
+                part.affected = part_data.get('affected')
                 part.location = part_data.get('location')
                 part.pain = part_data.get('pain')
                 part.irritation_or_hotspot = part_data.get('irritation')

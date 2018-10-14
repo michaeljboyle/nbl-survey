@@ -36,7 +36,7 @@
           config: {
             name: 'done',
             url: '/done',
-            template: 'app/introoutro/done.html'
+            templateUrl: 'app/introoutro/done.html'
           }
         }
       ];
@@ -48,7 +48,7 @@
   /* @ngInject */
   function loadSurvey(dataService, $transition$) {
     var id = $transition$.params().surveyId;
-    var idData = data.loadSurvey(id);
+    var idData = dataService.loadSurvey(id);
     // idData.dateSubmitted = new Date(pub.dateSubmitted);
     return idData;
   }

@@ -7,7 +7,7 @@
       // 'firebase',
       'ui.router',
       // 'angularMoment',
-      // 'ngMessages',
+      'ngMessages',
       // 'ngStorage',
       'ngMaterial',
     ]);

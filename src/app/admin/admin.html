@@ -1,29 +1,29 @@
 <div layout="column" layout-fill>
-    <div flex layout-padding layout="column">
-        <h2 flex class="md-display-1">Create a survey</h2>
-        <md-input-container flex>
+    <div flex="no-shrink" layout-padding layout="column">
+        <h2 flex="no-shrink" class="md-title">Create a survey</h2>
+        <md-input-container flex="no-shrink">
             <label>Recipient first name</label>
             <input type="text" ng-model="vm.data.firstName">
         </md-input-container>
-        <md-input-container flex>
+        <md-input-container flex="no-shrink">
             <label>Recipient email</label>
-            <input type="email" ng-pattern="/^.+@.+\..+$/" ng-model="vm.data.email">
+            <input type="email" required ng-pattern="/^.+@.+\..+$/" ng-model="vm.data.email">
         </md-input-container>
-        <md-input-container flex>
+        <md-input-container flex="no-shrink">
             <label>EIS ID</label>
-            <input type="text" ng-model="vm.data.eisId">
+            <input type="text" required ng-model="vm.data.eisId">
         </md-input-container>
-        <div layout="row">
+        <div layout="row" flex="no-shrink">
             <h4 class='md-subhead'>Date of NBL dive</h4>
             <md-input-container>
-                <md-datepicker ng-model="vm.nblDate" md-placeholder="Enter date"></md-datepicker>
+                <md-datepicker ng-model="vm.nblDate" required md-placeholder="Enter date"></md-datepicker>
             </md-input-container>
         </div>
-        <div layout="row" layout-align="space-between">
+        <div layout="row" flex="no-shrink" layout-align="space-between">
             <h4 class='md-subhead'>Time dive completed</h4>
             <md-input-container>
                 <label>(hh:mm)</label>
-                <input type="text" ng-model="vm.nblTime">
+                <input type="text" required ng-model="vm.nblTime">
             </md-input-container>
             <md-input-container>
                 <label>Survey send delay (default 48hrs)</label>
@@ -35,9 +35,7 @@
     <!-- Bottom buttons -->
 
     <!--  Text/number/multiselect button -->
-    <div flex="15" layout="row">
-        <div flex class="colorred bottombtn" layout="column" layout-align="center center" ng-click="vm.submit()">
-            SUBMIT
-        </div>
+    <div flex="15" layout="row" layout-align="end">
+        <div><md-button class="md-raised md-accent" ng-disabled="!vm.formComplete()" ng-click="vm.submit()">submit</md-button></div>
     </div>
 </div>

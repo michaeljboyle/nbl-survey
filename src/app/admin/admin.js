@@ -28,9 +28,23 @@
     };
     vm.nblDate = null;
     vm.nblTime = null;
+    vm.formComplete = formComplete;
   
     function onInit() {
       console.log('HERE');
+    }
+
+    function formComplete() {
+      if (vm.data.eisId == '') {
+        return false;
+      }
+      if (vm.nblDate === null || vm.nblTime === null) {
+        return false;
+      }
+      if (vm.data.email == '') {
+        return false;
+      }
+      return true;
     }
 
     function submit() {

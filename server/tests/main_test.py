@@ -119,7 +119,7 @@ class ApiTestCase(unittest.TestCase):
             'nblFinishTime': time,
             'surveySendDelay': delay
         }
-        j = {'data': json.dumps(data)}
+        j = json.dumps(data)
         response = self.app.post('/api/survey/create', data=j)
 
         self.assertEqual(response.status_code, 200)
@@ -145,7 +145,7 @@ class ApiTestCase(unittest.TestCase):
     def testPostSurvey(self):
         # First create one
         data = {
-            'questions': {'pain': True},
+            'questions': {'treatments': ['x']},
             'bodyparts': {
                 'head': {
                     'cuts': True
@@ -153,7 +153,7 @@ class ApiTestCase(unittest.TestCase):
             }
         }
 
-        j = {'data': json.dumps(data)}
+        j = json.dumps(data)
 
         # Create a survey to be updated
         s = Survey(eis_id = 'a', first_name='b',
@@ -164,6 +164,7 @@ class ApiTestCase(unittest.TestCase):
 
         response = self.app.post('/api/survey/%s' % key, data=j)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(ndb.Key(urlsafe=key).get().treatments, ['x'])
 
         
 

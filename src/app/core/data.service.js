@@ -235,6 +235,7 @@
     };
 
     var service = {
+      'createSurvey': createSurvey,
       'getBodypart': getBodypart,
       'getQuestion': getQuestion,
       'getSelectedBodyparts': getSelectedBodyparts,
@@ -251,6 +252,20 @@
     var surveyId = '';
 
     return service;
+
+    // Calls the api to create a survey
+    function createSurvey(data) {
+      return $http.post('/api/survey/create', data)
+        .then(createSuccess)
+        .catch(function(message) {
+          $log.error(message);
+          throw message;
+        });
+
+      function createSuccess(data, status, headers, config) {
+        return data.data;
+      }
+    }
 
     /**
      * Returns the appropriate BodypartObject from the key provided

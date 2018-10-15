@@ -2,5 +2,5 @@
   'use strict';
 
   angular
-    .module('nblsurvey.questions', []);
+    .module('nblsurvey.admin', []);
 })();

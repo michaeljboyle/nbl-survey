@@ -46,7 +46,8 @@ def survey(survey_id):
 @app.route('/api/survey/create', methods=['POST'])
 def createSurvey():
     # Get data required to create a survey
-    data = json.loads(request.form['data'])
+    data = json.loads(request.data)
+    logging.info(data)
     eis_id = data['eisId']
     nbl_finish_time = int(data['nblFinishTime'])
     survey_send_delay = int(data['surveySendDelay'])
@@ -63,6 +64,7 @@ def createSurvey():
                     survey_send_time=survey_send_time)
     survey.set_defaults()
     return survey.put().urlsafe()
+
 
 @app.route('/api/test')
 def createDummy():

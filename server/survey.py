@@ -95,7 +95,7 @@ class Survey(ndb.Model):
         self.pain_suitperformance = question_data.get('pain-suitperformance')
         self.pain_suitperformance_duration = question_data.get('pain-suitperformance-duration')
         self.fingernails = question_data.get('fingernails')
-        self.treatments = question_data.get('treatments')
+        self.treatments = question_data.get('treatments', [])
 
         # now update bodyparts
         bodyparts_data = j.get('bodyparts')

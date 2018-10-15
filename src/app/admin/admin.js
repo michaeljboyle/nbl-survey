@@ -49,8 +49,8 @@
           $mdToast.show(
             $mdToast.simple()
               .textContent('Submission successful!')
-              .position({'position': 'top'} )
-              .hideDelay(3000);
+              .position({'position': 'top'})
+              .hideDelay(3000)
           );
         }).catch(function() {
           alert('Something went wrong with the submission. It was not successful');

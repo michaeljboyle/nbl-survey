@@ -16,8 +16,9 @@ app = Flask(__name__)
 
 EMAIL_SENDER_ADDRESS = 'nbl-suit-exposure-survey@nbl-survey.appspotmail.com'
 SURVEY_LINK_BASE_URL = 'https://nbl-survey.appspot.com/#!/survey/'
+SURVEY_ADMINISTRATOR_EMAIL = 'mboyle88@gmail.com'
 
-def send_json(r):
+def send_json(r, indent=0):
     def date_converter(dt):
         t0 = datetime(1970, 1, 1)
         if isinstance(dt, datetime):
@@ -26,7 +27,7 @@ def send_json(r):
             logging.info(timestamp)
             return timestamp
     # self.response.headers['content-type'] = 'text/plain'
-    return json.dumps(r, default=date_converter)
+    return json.dumps(r, default=date_converter, indent=indent)
 
 
 @app.route('/api/survey/<survey_id>', methods=['GET', 'POST'])
@@ -36,6 +37,7 @@ def survey(survey_id):
         survey = ndb.Key(urlsafe=survey_id).get()
         return send_json(survey.jsonify())
 
+    # POST is an update/save
     if request.method == 'POST':
         data = json.loads(request.data)
         logging.info(data)
@@ -111,6 +113,29 @@ def sendSurveys():
     logging.info('Sent the following keys: ')
     logging.info(sent_keys)
     return json.dumps(sent_keys)
+
+# Task that will send email to survey administrator with latest data
+@app.route('/tasks/send-results')
+def sendResults():
+    toSend = Survey.query(Survey.survey_complete_timestamp != null,
+                          Survey.survey_complete_timestamp < datetime.now()).fetch()
+    jsons = []
+    for survey in toSend:
+        j = send_json(survey.jsonify(include_sensitive=True), indent=4)
+        # convert dates to readable dates. Divide by 1000 b/c javascript
+        # stamps in milliseconds and we want this back to python format
+        nbl_time = datetime.fromtimestamp(j['nblFinishTimestamp'] / 1000)
+        j['nblFinishTimestamp'] = nbl_time.strftime('%m/%d/%Y %H:%M')
+        complete_time = datetime.fromtimestamp(j['surveyCompleteTimestamp'] / 1000)
+        j['surveyCompleteTimestamp'] = complete_time.strftime('%m/%d/%Y %H:%M')
+        jsons.append(j)
+    body = '\n\n\n\n'.join(jsons)
+    logging.info(body)
+    mail.send_mail(sender=EMAIL_SENDER_ADDRESS,
+                       to=SURVEY_ADMINISTRATOR_EMAIL,
+                       subject="NBL survey data",
+                       body=jsons)
+    return 'success'
 
 
 @app.errorhandler(500)

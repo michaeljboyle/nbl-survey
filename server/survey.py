@@ -57,13 +57,18 @@ class Survey(ndb.Model):
             self.bodyparts.append(Bodypart(name=part_name))
 
     # Creates a dictionary of all properties for serialization to client
-    def jsonify(self):
+    def jsonify(self, include_sensitive=False):
         obj = {
             'eisId': self.eis_id,
             'nblFinishTimestamp': self.nbl_finish_timestamp,
             'surveyCompleteTimestamp': self.survey_complete_timestamp,
             'firstName': self.first_name,
         }
+
+        # Check if we want to include sensitive info
+        if include_sensitive:
+            obj['email'] = self.email
+
         obj['questions'] = {
             'exposure': self.other_exposure,
             'pain': self.pain,

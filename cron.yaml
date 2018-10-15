@@ -2,3 +2,8 @@ cron:
 - description: "check for due surveys and send them"
   url: /tasks/send-surveys
   schedule: every 1 hours from 07:00 to 19:00
+
+- description: "send survey results to administrator"
+  url: /tasks/send-results
+  schedule: every 24 hours
+  

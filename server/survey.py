@@ -23,6 +23,9 @@ class Bodypart(ndb.Model):
 class Survey(ndb.Model):
     """A model for representing survey data."""
 
+    # survey recipient email
+    email = ndb.StringProperty(required=True)
+    # EIS key that ties this survey to the corresponding EIS survey
     eis_id = ndb.StringProperty(required=True)
     # The time that the NBL run finished
     nbl_finish_timestamp = ndb.DateTimeProperty(required=True)
@@ -30,6 +33,8 @@ class Survey(ndb.Model):
     survey_complete_timestamp = ndb.DateTimeProperty()
     # The time the survey is due to be sent to use
     survey_send_time = ndb.DateTimeProperty(required=True)
+    # track the last time the survey was sent
+    last_sent = ndb.DateTimeProperty()
     # first name
     first_name = ndb.StringProperty()
     # Body parts
@@ -86,7 +91,12 @@ class Survey(ndb.Model):
         return obj
 
     def update_from_json(self, j):
+        # timestamp completion
         self.survey_complete_timestamp = datetime.now()
+        # Remove survey send time
+        self.survey_send_time = None
+
+        # Update questions
         question_data = j.get('questions')
         self.other_exposure = question_data.get('exposure')
         self.pain = question_data.get('pain')

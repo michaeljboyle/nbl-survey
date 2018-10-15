@@ -4,6 +4,7 @@ import logging
 # [START imports]
 from flask import Flask, request
 from google.appengine.ext import ndb
+from google.appengine.api import mail
 from survey import Survey
 from datetime import datetime, timedelta
 import json
@@ -13,6 +14,8 @@ import json
 app = Flask(__name__)
 # [END create_app]
 
+EMAIL_SENDER_ADDRESS = 'nbl-suit-exposure-survey@nbl-survey.appspotmail.com'
+SURVEY_LINK_BASE_URL = 'https://nbl-survey.appspot.com/#!/survey/'
 
 def send_json(r):
     def date_converter(dt):
@@ -52,6 +55,7 @@ def createSurvey():
     nbl_finish_time = int(data['nblFinishTime'])
     survey_send_delay = int(data['surveySendDelay'])
     first_name = data['firstName']
+    email = data['email']
 
     # Calculate survey send time
     # Convert times
@@ -61,7 +65,8 @@ def createSurvey():
     survey = Survey(eis_id=eis_id,
                     first_name=first_name,
                     nbl_finish_timestamp=nbl_time,
-                    survey_send_time=survey_send_time)
+                    survey_send_time=survey_send_time,
+                    email=email)
     survey.set_defaults()
     return survey.put().urlsafe()
 
@@ -74,6 +79,38 @@ def createDummy():
                     survey_send_time=datetime.fromtimestamp(1539719679))
     survey.set_defaults()
     return survey.put().urlsafe()
+
+
+""" The following are scheduled tasks, not meant to be called by a user
+"""
+@app.route('/tasks/send-surveys')
+def sendSurveys():
+    # first get surveys with survey_send_time < now AND
+    # last_sent == null
+    now = datetime.now()
+    logging.info(now)
+    toSend = Survey.query(Survey.survey_send_time < now, Survey.last_sent == None).fetch()
+    logging.info('About to send %s emails' % len(toSend))
+    sent_keys = []
+    for survey in toSend:
+        # create a link to the survey
+        link = SURVEY_LINK_BASE_URL + survey.key.urlsafe()
+        # mail it
+        mail.send_mail(sender=EMAIL_SENDER_ADDRESS,
+                       to="%s <%s>" % (survey.first_name, survey.email),
+                       subject="30-second NBL survey about your recent suit exposure",
+                       body="""{}:
+                       Please complete this 30-second survey about your recent
+                       suit exposure at the NBL. Thank you!
+
+                       Link: {}""".format(survey.first_name, link))
+        # mark it as sent with a timestamp
+        survey.last_sent = datetime.now()
+        # save it
+        sent_keys.append(survey.put().urlsafe())
+    logging.info('Sent the following keys: ')
+    logging.info(sent_keys)
+    return json.dumps(sent_keys)
 
 
 @app.errorhandler(500)

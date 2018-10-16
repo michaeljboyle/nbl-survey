@@ -21,33 +21,41 @@
     vm.submit = submit;
     vm.data = {
       'eisId': '',
-      'nblFinishTime': null,
+      'nblFinishTime': '',
       'surveySendDelay': 48,
       'email': '',
       'firstName': ''
     };
     vm.nblDate = null;
     vm.nblTime = null;
-    vm.formComplete = formComplete;
+    vm.submitEnabled = submitEnabled;
+    vm.submitting = false
   
     function onInit() {
-      console.log('HERE');
     }
 
-    function formComplete() {
+    function submitEnabled() {
       if (vm.data.eisId == '') {
         return false;
       }
       if (vm.nblDate === null || vm.nblTime === null) {
         return false;
       }
-      if (vm.data.email == '') {
+      if (!/^([01]\d|2[0-3]):([0-5]\d)$/.test(vm.nblTime)) {
+        return false;
+      }
+      if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(vm.data.email)) {
+        return false;
+      }
+      if (vm.submitting) {
         return false;
       }
       return true;
     }
 
     function submit() {
+      // Disable submit button and show loading progress
+      vm.submitting = true;
       // calculate the finish timestamp
       var timestamp = vm.nblDate.getTime();
       var time = vm.nblTime.split(':');
@@ -60,16 +68,16 @@
       vm.data.nblFinishTime = timestamp;
       dataService.createSurvey(vm.data)
         .then(function(success) {
+          $state.go('done');
           $mdToast.show(
             $mdToast.simple()
               .textContent('Submission successful!')
-              .position({'position': 'top'})
+              .position('bottom')
               .hideDelay(3000)
           );
         }).catch(function() {
           alert('Something went wrong with the submission. It was not successful');
       });
-      $state.go('done');
     }
   }
 })();

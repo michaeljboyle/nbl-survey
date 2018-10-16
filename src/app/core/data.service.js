@@ -214,7 +214,7 @@
       },
       'fingernails': {
         'q': 'Any sign and/or symptom specific to the fingernails?',
-        'response': '',
+        'response': 'None',
         'qtype': questionTypes.TEXT,
         'nextq': 'treatments'
       },

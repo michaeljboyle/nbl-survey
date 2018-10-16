@@ -139,7 +139,7 @@ def sendResults():
     mail.send_mail(sender=EMAIL_SENDER_ADDRESS,
                        to=SURVEY_ADMINISTRATOR_EMAIL,
                        subject="NBL survey data",
-                       body=jsons)
+                       body=body)
     return 'success'
 
 

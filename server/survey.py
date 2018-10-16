@@ -5,6 +5,12 @@ BODYPART_NAMES = ['head', 'neck', 'torso', 'rShoulder', 'rArm', 'rHand',
                   'lShoulder', 'lArm', 'lHand', 'groin', 'rHip', 'rLeg',
                   'rFoot', 'lHip', 'lLeg', 'lFoot']
 
+# Converts datetime into javascript friendly timestamp in millisec since epoch
+def get_timestamp(dt):
+    if dt is None:
+        return dt
+    return (dt - datetime(1970, 1, 1)).total_seconds() * 1000
+
 # Structured property to contain bodypart data
 class Bodypart(ndb.Model):
     name = ndb.StringProperty(
@@ -64,8 +70,9 @@ class Survey(ndb.Model):
     def jsonify(self, include_sensitive=False):
         obj = {
             'eisId': self.eis_id,
-            'nblFinishTimestamp': self.nbl_finish_timestamp,
-            'surveyCompleteTimestamp': self.survey_complete_timestamp,
+            # Convert dates appropriately
+            'nblFinishTimestamp': get_timestamp(self.nbl_finish_timestamp),
+            'surveyCompleteTimestamp': get_timestamp(self.survey_complete_timestamp),
             'firstName': self.first_name,
         }
 

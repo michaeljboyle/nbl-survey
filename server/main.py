@@ -18,24 +18,13 @@ EMAIL_SENDER_ADDRESS = 'nbl-suit-exposure-survey@nbl-survey.appspotmail.com'
 SURVEY_LINK_BASE_URL = 'https://nbl-survey.appspot.com/#!/survey/'
 SURVEY_ADMINISTRATOR_EMAIL = 'mboyle88@gmail.com'
 
-SURVEY_EMAIL = """
-{}:
+SURVEY_EMAIL = """{}:
 
-Please complete this 30-second survey about your recent
-suit exposure at the NBL. Thank you!
+Please complete this 30-second survey about your recent suit exposure at the NBL.
+
+Thank you!
 
 Link: {}"""
-
-def send_json(r, indent=0):
-    def date_converter(dt):
-        t0 = datetime(1970, 1, 1)
-        if isinstance(dt, datetime):
-            logging.info(dt)
-            timestamp = (dt - t0).total_seconds() * 1000  # for time in ms
-            logging.info(timestamp)
-            return timestamp
-    # self.response.headers['content-type'] = 'text/plain'
-    return json.dumps(r, default=date_converter, indent=indent)
 
 
 @app.route('/api/survey/<survey_id>', methods=['GET', 'POST'])
@@ -43,7 +32,7 @@ def survey(survey_id):
     # GET is a fetch
     if request.method == 'GET':
         survey = ndb.Key(urlsafe=survey_id).get()
-        return send_json(survey.jsonify())
+        return json.dumps(survey.jsonify())
 
     # POST is an update/save
     if request.method == 'POST':
@@ -132,14 +121,19 @@ def sendResults():
                           Survey.survey_complete_timestamp != None).fetch()
     jsons = []
     for survey in toSend:
-        j = send_json(survey.jsonify(include_sensitive=True), indent=4)
         # convert dates to readable dates. Divide by 1000 b/c javascript
         # stamps in milliseconds and we want this back to python format
-        nbl_time = datetime.fromtimestamp(j['nblFinishTimestamp'] / 1000)
-        j['nblFinishTimestamp'] = nbl_time.strftime('%m/%d/%Y %H:%M')
-        complete_time = datetime.fromtimestamp(j['surveyCompleteTimestamp'] / 1000)
-        j['surveyCompleteTimestamp'] = complete_time.strftime('%m/%d/%Y %H:%M')
+        logging.info('timestamp is ')
+        nbl_str_time = survey.nbl_finish_timestamp.strftime('%m/%d/%Y %H:%M')
+        complete_str_time = survey.survey_complete_timestamp.strftime('%m/%d/%Y %H:%M')
+        survey_data = survey.jsonify(include_sensitive=True)
+        # Using jsonify gave us timestamps so we want to reset those to the 
+        # human readable strings we just created
+        survey_data['nblFinishTimestamp'] = nbl_str_time
+        survey_data['surveyCompleteTimestamp'] = complete_str_time
+        j = json.dumps(survey_data, indent=4)
         jsons.append(j)
+        
     body = '\n\n\n\n'.join(jsons)
     logging.info(body)
     mail.send_mail(sender=EMAIL_SENDER_ADDRESS,

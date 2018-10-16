@@ -33,6 +33,10 @@ class Survey(ndb.Model):
     survey_complete_timestamp = ndb.DateTimeProperty()
     # The time the survey is due to be sent to use
     survey_send_time = ndb.DateTimeProperty(required=True)
+    # Track the number of times it's been sent to the user
+    send_count = ndb.IntegerProperty(default=0)
+    # Tracks whether the results have successfully been mailed or downloaded
+    results_reported = ndb.BooleanProperty(default=False)
     # track the last time the survey was sent
     last_sent = ndb.DateTimeProperty()
     # first name
@@ -98,8 +102,6 @@ class Survey(ndb.Model):
     def update_from_json(self, j):
         # timestamp completion
         self.survey_complete_timestamp = datetime.now()
-        # Remove survey send time
-        self.survey_send_time = None
 
         # Update questions
         question_data = j.get('questions')

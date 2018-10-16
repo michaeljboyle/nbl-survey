@@ -18,6 +18,14 @@ EMAIL_SENDER_ADDRESS = 'nbl-suit-exposure-survey@nbl-survey.appspotmail.com'
 SURVEY_LINK_BASE_URL = 'https://nbl-survey.appspot.com/#!/survey/'
 SURVEY_ADMINISTRATOR_EMAIL = 'mboyle88@gmail.com'
 
+SURVEY_EMAIL = """
+{}:
+
+Please complete this 30-second survey about your recent
+suit exposure at the NBL. Thank you!
+
+Link: {}"""
+
 def send_json(r, indent=0):
     def date_converter(dt):
         t0 = datetime(1970, 1, 1)
@@ -91,7 +99,11 @@ def sendSurveys():
     # last_sent == null
     now = datetime.now()
     logging.info(now)
-    toSend = Survey.query(Survey.survey_send_time < now, Survey.last_sent == None).fetch()
+    # Currently only send to those who are due to be reminded AND have NOT
+    # completed it AND have never received an email about this nbl run 
+    toSend = Survey.query(Survey.survey_send_time < now,
+                          Survey.send_count == 0,
+                          Survey.survey_complete_timestamp == None).fetch()
     logging.info('About to send %s emails' % len(toSend))
     sent_keys = []
     for survey in toSend:
@@ -101,13 +113,12 @@ def sendSurveys():
         mail.send_mail(sender=EMAIL_SENDER_ADDRESS,
                        to="%s <%s>" % (survey.first_name, survey.email),
                        subject="30-second NBL survey about your recent suit exposure",
-                       body="""{}:
-                       Please complete this 30-second survey about your recent
-                       suit exposure at the NBL. Thank you!
-
-                       Link: {}""".format(survey.first_name, link))
+                       body=SURVEY_EMAIL.format(survey.first_name, link))
+        
         # mark it as sent with a timestamp
         survey.last_sent = datetime.now()
+        # increment number times sent
+        survey.send_count += 1
         # save it
         sent_keys.append(survey.put().urlsafe())
     logging.info('Sent the following keys: ')
@@ -117,8 +128,8 @@ def sendSurveys():
 # Task that will send email to survey administrator with latest data
 @app.route('/tasks/send-results')
 def sendResults():
-    toSend = Survey.query(Survey.survey_complete_timestamp != null,
-                          Survey.survey_complete_timestamp < datetime.now()).fetch()
+    toSend = Survey.query(Survey.results_reported == False,
+                          Survey.survey_complete_timestamp != None).fetch()
     jsons = []
     for survey in toSend:
         j = send_json(survey.jsonify(include_sensitive=True), indent=4)

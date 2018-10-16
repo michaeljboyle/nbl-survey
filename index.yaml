@@ -12,16 +12,6 @@ indexes:
 
 - kind: Survey
   properties:
-  - name: last_sent
-  - name: survey_send_time
-
-- kind: Survey
-  properties:
-  - name: results_reported
-  - name: survey_complete_timestamp
-
-- kind: Survey
-  properties:
   - name: send_count
   - name: survey_complete_timestamp
   - name: survey_send_time

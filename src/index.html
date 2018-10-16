@@ -27,14 +27,7 @@
     <!-- endinject -->
 </head>
 <body>
-    <div data-ng-include="'app/layout/shell.html'" layout-fill></div>  
-    <!-- <div layout="column" layout-fill>
-        <div data-ng-include="'app/layout/shell.html'"></div>  
-        <div flex="grow" ui-view></div>
-    </div> -->
-   
-
-    <!-- <app-root></app-root> -->
+    <div data-ng-include="'app/layout/shell.html'" layout-fill></div>
 
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
@@ -51,45 +44,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.3.0/angular-moment.min.js"></script>
 
     <!-- My application bootstrap  -->
-
-    <script src="app/app.module.js"></script>
-    <script src="app/app.config.js"></script>
-
-    <!-- Reusable Blocks/Modules -->
-
-    <!-- core module -->
-    <script src="app/core/core.module.js"></script>
-    <script src="app/core/routerHelperProvider.js"></script>
-    <script src="app/core/question.service.js"></script>
-    <script src="app/core/body.service.js"></script>
-    <script src="app/core/data.service.js"></script>
-
-    <!-- layout -->
-    <script src="app/layout/layout.module.js"></script>
-
-    <!-- splash -->
-    <script src="app/introoutro/introoutro.module.js"></script>
-    <script src="app/introoutro/introoutro.route.js"></script>
-    <script src="app/introoutro/intro.js"></script>
-    <script src="app/introoutro/outro.js"></script>
-
-    <!-- questions -->
-    <script src="app/questions/questions.module.js"></script>
-    <script src="app/questions/questions.route.js"></script>
-    <script src="app/questions/questions.js"></script>
-
-    <!-- body -->
-    <script src="app/body/body.module.js"></script>
-    <script src="app/body/body.route.js"></script>
-    <script src="app/body/body.js"></script>
-    <script src="app/body/bottomsheet.html"></script>
-    <script src="app/body/bottomsheet.controller.js"></script>
-
-    <!-- admin -->
-    <script src="app/admin/admin.module.js"></script>
-    <script src="app/admin/admin.route.js"></script>
-    <script src="app/admin/admin.js"></script>
-
+    <script src="minified/app.min.js"></script>
 
 </body>
 </html>

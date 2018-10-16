@@ -20,3 +20,14 @@ handlers:
 libraries:
 - name: ssl
   version: latest
+
+skip_files:
+- node_modules/
+- server/tests
+- .gitignore
+- \.git/
+- gulpfile.js
+- package.json
+- package-lock.json
+- angular.json
+- README.md

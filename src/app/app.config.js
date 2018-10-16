@@ -5,6 +5,7 @@
 
   configure.$inject = ['$mdThemingProvider', '$urlRouterProvider'];
 
+  /* @ngInject */
   function configure($mdThemingProvider, $urlRouterProvider) {
     $urlRouterProvider.when('', '/');
     $mdThemingProvider

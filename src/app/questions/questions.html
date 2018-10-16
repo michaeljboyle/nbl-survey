@@ -4,28 +4,29 @@
             BACK
         </div>
     </div>
-    <div flex layout="column">
-        <div flex layout="column" layout-align="center center" layout-padding>
-            <div ng-if="!vm.allowOther()"><h2 class="md-display-1 center">{{ vm.questionText }}</h2></div>
-            <div ng-if="vm.allowOther()"><h4 class="md-subhead center">{{ vm.questionText }}</h4></div>
-        </div>
+    <div flex layout="column" layout-align="start">
+        <div flex layout="column" layout-padding layout-align="center" ng-if="!vm.allowOther()"><h2 class="md-display-1 center">{{ vm.questionText }}</h2></div>
+        <div layout="column" layout-align="start" ng-if="vm.allowOther()"><h4 class="md-title squish center">{{ vm.questionText }}</h4></div>
+        <!-- <div flex="noshrink" layout="column" layout-align="center center" layout-padding>
+            
+        </div> -->
 
         <!-- Text input -->
-        <div flex="noshrink" ng-if="vm.qtype == 'text'" layout="column" layout-align="center bottom" layout-padding>
+        <div flex ng-if="vm.qtype == 'text'" layout="column" layout-align="center bottom" layout-padding>
             <md-input-container class="textInput">
                 <textarea md-no-resize ng-model="vm.input"></textarea> 
             </md-input-container>
         </div>
 
         <!-- Number input -->
-        <div flex="noshrink" ng-if="vm.qtype == 'number'" layout="column" layout-align="center center" layout-padding>
+        <div ng-if="vm.qtype == 'number'" layout="column" layout-align="center center" layout-padding>
             <md-input-container class="numberInput" flex>
                 <input ng-model="vm.input" type="number">
             </md-input-container>
         </div>
 
         <!-- Multiselect input -->
-        <div flex="noshrink" ng-if="vm.qtype == 'multiselect'" layout="row" layout-padding layout-wrap>
+        <div ng-if="vm.qtype == 'multiselect'" layout="row" layout-align="start start" layout-padding layout-wrap>
             <div data-ng-repeat="option in vm.options">
                 <md-checkbox ng-click="vm.toggleSelection(option)" ng-checked="vm.isChecked(option)">
                     {{ option }}
@@ -37,12 +38,12 @@
                 </md-checkbox>
             </div>
         </div>
-        <div flex="15" layout="column" layout-align="end none" layout-padding ng-if="vm.otherChecked">
-            <md-input-container>
-                <label>Other</label>
-                <input ng-disabled="!vm.otherChecked" type="text" ng-model="vm.other">
-            </md-input-container>
-        </div>
+    </div>
+    <div layout="column" layout-padding ng-if="vm.otherChecked && vm.qtype == 'multiselect'">
+        <md-input-container flex>
+            <label>Other</label>
+            <input ng-disabled="!vm.otherChecked" type="text" ng-model="vm.other">
+        </md-input-container>
     </div>
 
     <!-- Bottom buttons -->

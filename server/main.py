@@ -133,8 +133,11 @@ def sendResults():
         survey_data['surveyCompleteTimestamp'] = complete_str_time
         j = json.dumps(survey_data, indent=4)
         jsons.append(j)
-        
+    
+
+    logging.info('about to concat')
     body = '\n\n\n\n'.join(jsons)
+    logging.info('the length of the body of email is %s' % str(len(body)))
     logging.info(body)
     mail.send_mail(sender=EMAIL_SENDER_ADDRESS,
                        to=SURVEY_ADMINISTRATOR_EMAIL,

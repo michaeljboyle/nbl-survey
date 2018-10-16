@@ -2,15 +2,13 @@ runtime: python27
 api_version: 1
 threadsafe: true
 
-default_expiration: '1s'
-
 handlers:
 - url: /tasks/.*
-  script: server.main.app
+  script: server.main-test.app
   login: admin
   
 - url: /api/.*
-  script: server.main.app
+  script: server.main-test.app
 
 - url: (.*)/
   static_files: src/index.html

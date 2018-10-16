@@ -122,7 +122,7 @@ def sendResults():
 
     if len(toSend) == 0:
         return 'no surveys to send'
-        
+
     survey_strs = []
     for survey in toSend:
         # convert dates to readable dates. Divide by 1000 b/c javascript
@@ -142,8 +142,11 @@ def sendResults():
     body = '\n\n\n\n'.join(survey_strs)
     logging.info('the length of the body of email is %s' % str(len(body)))
     logging.info(body)
-    mail.send_mail(sender=EMAIL_SENDER_ADDRESS, to=SURVEY_ADMINISTRATOR_EMAIL,
+
+    mail.send_mail(sender=EMAIL_SENDER_ADDRESS,
+                   to=SURVEY_ADMINISTRATOR_EMAIL,
                    subject="NBL survey data", body=body)
+    
     reported_keys = []
     for survey in toSend:
         survey.results_reported = True

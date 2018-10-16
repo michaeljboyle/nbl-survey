@@ -24,11 +24,9 @@
     vm.hasPrevious = hasPrevious;
     vm.input = null;
     vm.isChecked = isChecked;
-    vm.otherChecked = false;
     vm.qtype = null
     vm.questionText = null;
     vm.saveResponse = saveResponse;
-    vm.toggleOther = toggleOther;
     vm.toggleSelection = toggleSelection;
     vm.options = [];
     vm.other = '';
@@ -91,7 +89,7 @@
     }
 
     function saveResponse(response) {
-      if (allowOther() && vm.otherChecked && vm.other !== '') {
+      if (allowOther() && vm.other !== '') {
         response.push(vm.other);
       }
       try {
@@ -121,7 +119,6 @@
         // and add set it on vm.other
         vm.input.splice(vm.input.indexOf(other), 1);
         console.log('after splice: ' + vm.input);
-        vm.otherChecked = true;
         vm.other = other;
       }
       console.log('input is ' + qObj.data.response);
@@ -143,16 +140,6 @@
         vm.qtype = 'multiselect';
         vm.options = qObj.getOptions();
       }
-    }
-
-    function toggleOther() {
-      if (vm.otherChecked === true) {
-        vm.otherChecked = false;
-      }
-      else {
-        vm.otherChecked = true;
-      }
-      vm.other = '';
     }
 
     function toggleSelection(option) {

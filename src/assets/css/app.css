@@ -2,18 +2,29 @@
   text-align: center; }
 
 .titlebar {
-  color: white; }
+  color: white;
+  height: 80px; }
 
 .squish {
-  margin-top: 5px;
-  margin-bottom: 5px; }
+  margin-top: 10px;
+  margin-bottom: 10px; }
 
-.bottombtn {
+.navbtn {
   text-align: center;
   font-weight: 900;
   color: white;
   vertical-align: middle;
-  font-size: 30px; }
+  font-size: 30px;
+  height: 80px;
+  z-index: 999; }
+
+.bodybtn {
+  text-align: center;
+  font-weight: 900;
+  color: white;
+  vertical-align: middle;
+  font-size: 30px;
+  height: 80px; }
 
 .colornavy {
   background-color: #0b5394ff; }

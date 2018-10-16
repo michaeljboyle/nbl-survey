@@ -1,9 +1,4 @@
 <div layout="column" layout-fill>
-    <div flex="10" layout="row" ng-show="true">
-        <div flex class="colorblack bottombtn" layout="column" layout-align="center center" ng-click="vm.back()">
-            BACK
-        </div>
-    </div>
     <div flex layout-padding layout="column" layout-align="center">
 
         <!-- <img src="assets/img/body.svg"> -->
@@ -87,8 +82,11 @@
 
     <!-- Bottom buttons -->
     <!--  Text/number/multiselect button -->
-    <div flex="15" layout="row">
-        <div flex class="colorgrey bottombtn" layout="column" layout-align="center center" ng-click="vm.next()">
+    <div layout="row">
+        <div flex="50" class="colorblack bodybtn" layout="column" layout-align="center center" ng-click="vm.back()">
+            BACK
+        </div>
+        <div flex="50" class="colorgrey bodybtn" layout="column" layout-align="center center" ng-click="vm.next()">
             NEXT
         </div>
     </div>

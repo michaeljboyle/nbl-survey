@@ -7,4 +7,5 @@ cron:
 - description: "send survey results to administrator"
   url: /tasks/send-results
   schedule: every 24 hours synchronized
+  timezone: America/Chicago
   

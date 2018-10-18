@@ -21,7 +21,7 @@ libraries:
 - name: ssl
   version: latest
 - name: pytz
-  version: "2017.2"
+  version: "2017.3"
 
 skip_files:
 - node_modules/

@@ -6,7 +6,7 @@ from google.appengine.ext import ndb
 from google.appengine.ext import testbed
 
 from survey import Survey
-from main import app
+from main2 import app, to_central_time
 
 from datetime import datetime, timedelta
 import json
@@ -80,6 +80,22 @@ class SurveyTestCase(unittest.TestCase):
         self.assertEqual(s.pain, True)
         self.assertEqual(head.affected, headAffected)
         self.assertEqual(head.pain, headPain)
+
+    def testTimezone(self):
+        # Test that the timezone function  converts a given date to Central
+        # test date
+        test_date = datetime(2000, 1, 1, 0, 0, 0)  # midnight UTC jan 1 2000
+        # This would fall in non-daylight savings, so CST which is 6 behind GMT
+        expect_y = 1999
+        expect_m = 12
+        expect_d = 31
+        expect_h = 18
+        result = to_central_time(test_date)
+        self.assertEqual(expect_y, result.year)
+        self.assertEqual(expect_m, result.month)
+        self.assertEqual(expect_d, result.day)
+        self.assertEqual(expect_h, result.hour)
+
 
 # [START datastore_example_test]
 class ApiTestCase(unittest.TestCase):

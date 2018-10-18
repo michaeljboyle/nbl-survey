@@ -4,11 +4,11 @@ threadsafe: true
 
 handlers:
 - url: /tasks/.*
-  script: server.main-test.app
+  script: server.main2.app
   login: admin
   
 - url: /api/.*
-  script: server.main-test.app
+  script: server.main2.app
 
 - url: (.*)/
   static_files: src/index.html
@@ -20,6 +20,8 @@ handlers:
 libraries:
 - name: ssl
   version: latest
+- name: pytz
+  version: "2017.2"
 
 skip_files:
 - node_modules/

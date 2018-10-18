@@ -7,6 +7,7 @@ from google.appengine.ext import ndb
 from google.appengine.api import mail
 from survey import Survey
 from datetime import datetime, timedelta
+from pytz import timezone
 import json
 # [END imports]
 
@@ -25,6 +26,12 @@ Please complete this 30-second survey about your recent suit exposure at the NBL
 Thank you!
 
 Link: {}"""
+
+
+# Returns the GMT input date as a Central time (CST/CDT) output date
+def to_central_time(dt):
+    utc_time = timezone('UTC').localize(dt)
+    return utc_time.astimezone(timezone('America/Chicago'))
 
 
 @app.route('/api/survey/<survey_id>', methods=['GET', 'POST'])
@@ -127,8 +134,10 @@ def sendResults():
     for survey in toSend:
         # convert dates to readable dates. Divide by 1000 b/c javascript
         # stamps in milliseconds and we want this back to python format
-        nbl_str_time = survey.nbl_finish_timestamp.strftime('%m/%d/%Y %H:%M')
-        complete_str_time = survey.survey_complete_timestamp.strftime('%m/%d/%Y %H:%M')
+        nbl_str_time = to_central_time(
+                survey.nbl_finish_timestamp).strftime('%m/%d/%Y %H:%M')
+        complete_str_time = to_central_time(
+                survey.survey_complete_timestamp).strftime('%m/%d/%Y %H:%M')
         survey_data = survey.jsonify(include_sensitive=True)
         # Using jsonify gave us timestamps so we want to reset those to the 
         # human readable strings we just created

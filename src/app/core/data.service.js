@@ -11,6 +11,7 @@
   function dataService($http, $log, $q, Question, Bodypart) {
     var bodyData = {
       'head': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -20,6 +21,7 @@
         'comments': ''
       },
       'neck': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -29,6 +31,7 @@
         'comments': ''
       },
       'torso': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -38,6 +41,7 @@
         'comments': ''
       },
       'rShoulder': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -47,6 +51,7 @@
         'comments': ''
       },
       'rArm': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -56,6 +61,7 @@
         'comments': ''
       },
       'rHand': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -65,6 +71,7 @@
         'comments': ''
       },
       'lShoulder': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -74,6 +81,7 @@
         'comments': ''
       },
       'lArm': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -83,6 +91,7 @@
         'comments': ''
       },
       'lHand': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -92,6 +101,7 @@
         'comments': ''
       },
       'rHip': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -101,6 +111,7 @@
         'comments': ''
       },
       'rLeg': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -110,6 +121,7 @@
         'comments': ''
       },
       'rFoot': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -119,6 +131,7 @@
         'comments': ''
       },
       'lHip': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -128,6 +141,7 @@
         'comments': ''
       },
       'lLeg': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -137,6 +151,7 @@
         'comments': ''
       },
       'lFoot': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -146,6 +161,7 @@
         'comments': ''
       },
       'groin': {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -332,6 +348,7 @@
     // Resets body part data to baseline
     function resetBodyData(key) {
       bodyData[key] = {
+        'affected': false,
         'location': '',
         'pain': 0,
         'irritation': false,
@@ -350,6 +367,8 @@
     // Updates the locally stored bodypart data
     function updateBodypart(bodyObj) {
       console.log('updating key:' + bodyObj.key);
+      bodyObj.data.affected = true;
+      console.log(bodyObj.data);
       bodyData[bodyObj.key] = bodyObj.data;
       console.log(bodyData);
     }

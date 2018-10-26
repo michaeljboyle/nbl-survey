@@ -141,7 +141,8 @@ def sendResults():
                 survey.nbl_finish_timestamp).strftime('%m/%d/%Y %H:%M')
         complete_str_time = to_central_time(
                 survey.survey_complete_timestamp).strftime('%m/%d/%Y %H:%M')
-        survey_data = survey.jsonify(include_sensitive=True)
+        survey_data = survey.jsonify(include_sensitive=True,
+                                     exclude_unaffected=True)
         # Using jsonify gave us timestamps so we want to reset those to the 
         # human readable strings we just created
         survey_data['nblFinishTimestamp'] = nbl_str_time

@@ -67,7 +67,7 @@ class Survey(ndb.Model):
             self.bodyparts.append(Bodypart(name=part_name))
 
     # Creates a dictionary of all properties for serialization to client
-    def jsonify(self, include_sensitive=False):
+    def jsonify(self, include_sensitive=False, exclude_unaffected=False):
         obj = {
             'eisId': self.eis_id,
             # Convert dates appropriately
@@ -93,17 +93,20 @@ class Survey(ndb.Model):
         # Add body parts
         obj['bodyparts'] = {}
         for bodypart in self.bodyparts:
-            name = bodypart.name
-            obj['bodyparts'][name] = {
-                'affected': bodypart.affected,
-                'location': bodypart.location,
-                'pain': bodypart.pain,
-                'irritation': bodypart.irritation_or_hotspot,
-                'numbness': bodypart.numbness_or_tingling,
-                'bruises': bodypart.bruises_or_discoloration,
-                'cuts': bodypart.cuts_or_abrasions,
-                'comments': bodypart.comments
-            }
+            if exclude_unaffected is True and bodypart.affected is False:
+                continue
+            else:
+                name = bodypart.name
+                obj['bodyparts'][name] = {
+                    'affected': bodypart.affected,
+                    'location': bodypart.location,
+                    'pain': bodypart.pain,
+                    'irritation': bodypart.irritation_or_hotspot,
+                    'numbness': bodypart.numbness_or_tingling,
+                    'bruises': bodypart.bruises_or_discoloration,
+                    'cuts': bodypart.cuts_or_abrasions,
+                    'comments': bodypart.comments
+                }
         return obj
 
     def update_from_json(self, j):

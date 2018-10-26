@@ -1,60 +1,63 @@
-<div layout="column" layout-fill>
-    <div layout="row" ng-show="vm.hasPrevious()">
-        <div flex class="colorblack navbtn" layout="column" layout-align="center center" ng-click="vm.back()">
+<div flex layout="column">
+    <div layout="row" class="navbtn-container" ng-show="vm.hasPrevious()">
+        <div flex class="colorblack navbtn top" layout="column" layout-align="center center" ng-click="vm.back()">
             BACK
         </div>
     </div>
-    <div flex="noshrink" layout="column" layout-align="start">
-        <div flex layout="column" layout-padding layout-align="center" ng-if="!vm.allowOther()"><h2 class="md-display-1 center">{{ vm.questionText }}</h2></div>
-        <div layout="column" layout-align="start" ng-if="vm.allowOther()"><h4 class="md-title center">{{ vm.questionText }}</h4></div>
-        <!-- <div flex="noshrink" layout="column" layout-align="center center" layout-padding>
-            
-        </div> -->
+    <div flex="noshrink" layout="column">
+        <div flex layout="column" layout-align="start">
+            <div flex layout="column" layout-padding layout-align="center" ng-if="!vm.allowOther()"><h2 class="md-display-1 center">{{ vm.questionText }}</h2></div>
+            <div layout="column" layout-align="start" ng-if="vm.allowOther()"><h4 class="md-title center">{{ vm.questionText }}</h4></div>
+            <!-- <div flex="noshrink" layout="column" layout-align="center center" layout-padding>
+                
+            </div> -->
 
-        <!-- Text input -->
-        <div flex ng-if="vm.qtype == 'text'" layout="column" layout-align="center bottom" layout-padding>
-            <md-input-container class="textInput">
-                <textarea md-no-resize ng-model="vm.input"></textarea> 
-            </md-input-container>
-        </div>
+            <!-- Text input -->
+            <div flex ng-if="vm.qtype == 'text'" layout="column" layout-align="center bottom" layout-padding>
+                <md-input-container class="textInput">
+                    <textarea md-no-resize ng-model="vm.input"></textarea> 
+                </md-input-container>
+            </div>
 
-        <!-- Number input -->
-        <div ng-if="vm.qtype == 'number'" layout="column" layout-align="center center" layout-padding>
-            <md-input-container class="numberInput" flex>
-                <input ng-model="vm.input" type="number">
-            </md-input-container>
-        </div>
+            <!-- Number input -->
+            <div ng-if="vm.qtype == 'number'" layout="column" layout-align="center center" layout-padding>
+                <md-input-container class="numberInput">
+                    <input ng-model="vm.input" type="number">
+                </md-input-container>
+            </div>
 
-        <!-- Multiselect input -->
-        <div ng-if="vm.qtype == 'multiselect'" layout="row" layout-align="start start" layout-padding layout-wrap>
-            <div data-ng-repeat="option in vm.options">
-                <md-checkbox ng-click="vm.toggleSelection(option)" ng-checked="vm.isChecked(option)">
-                    {{ option }}
-                </md-checkbox>
-           </div>
+            <!-- Multiselect input -->
+            <div ng-if="vm.qtype == 'multiselect'" layout="row" layout-align="start start" layout-padding layout-wrap>
+                <div data-ng-repeat="option in vm.options">
+                    <md-checkbox ng-click="vm.toggleSelection(option)" ng-checked="vm.isChecked(option)">
+                        {{ option }}
+                    </md-checkbox>
+               </div>
+            </div>
+
+            <!-- Other input -->
+            <div flex layout-padding ng-if="vm.qtype == 'multiselect'" layout="column" layout-align="center bottom" layout-padding>
+                <md-input-container class="textInput">
+                    <label>Other</label>
+                    <input ng-disabled="" type="text" ng-model="vm.other">
+                </md-input-container>
+            </div>
         </div>
     </div>
-    <div layout-padding ng-if="vm.qtype == 'multiselect'">
-        <md-input-container flex>
-            <label>Other</label>
-            <input ng-disabled="" type="text" ng-model="vm.other">
-        </md-input-container>
-    </div>
-
     <!-- Bottom buttons -->
     <!-- Yes/no buttons -->
-    <div ng-if="vm.qtype == 'yesno'" layout="row">
-        <div flex="50" class="colorgrey navbtn" layout="column" layout-align="center center" ng-click="vm.answer(false)">
+    <div ng-if="vm.qtype == 'yesno'" class="navbtn-container" layout="row">
+        <div class="colorgrey navbtn bottom left" layout="column" layout-align="center center" ng-click="vm.answer(false)">
             NO
         </div>
-        <div flex="50" class="colorred navbtn" layout="column" layout-align="center center" ng-click="vm.answer(true)">
+        <div class="colorred navbtn bottom right" layout="column" layout-align="center center" ng-click="vm.answer(true)">
             YES
         </div>
     </div>
 
     <!--  Text/number/multiselect button -->
-    <div ng-if="vm.qtype != 'yesno'" layout="row">
-        <div flex class="colorgrey navbtn" layout="column" layout-align="center center" ng-click="vm.answer(vm.input)">
+    <div ng-if="vm.qtype != 'yesno'" layout="row" class="navbtn-container">
+        <div class="colorgrey navbtn bottom" layout="column" layout-align="center center" ng-click="vm.answer(vm.input)">
             NEXT
         </div>
     </div>

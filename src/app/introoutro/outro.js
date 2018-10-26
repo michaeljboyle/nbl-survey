@@ -17,7 +17,12 @@
   function OutroController(dataService, $log, $state) {
     var vm = this;
 
+    vm.back = back;
     vm.submit = submit;
+
+    function back() {
+      $state.go('body');
+    }
 
     function submit() {
       dataService.uploadData().then(function(success) {

@@ -1,9 +1,9 @@
-<div layout="column" layout-fill>
+<div layout="column" flex>
     <div flex layout-padding layout="column" layout-align="center">
 
         <!-- <img src="assets/img/body.svg"> -->
         <!-- Human Body //-->
-        <div flex class="human-body">
+        <div flex="noshrink" layout="column" class="human-body">
 
             <svg width="100%" height="100%" viewBox="-73 0 205 496" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g ng-click="vm.select('head')" ng-class="{selected: vm.isSelected('head')}" class="head" id="head" stroke="none" stroke-width="1"><path d="M50.13,43.725 L50.238,31.95 L29.078,17.208 L9.123,29.133 L9.09,43.19 L5.85,43.405 L7.312,53.137 L12.52,54.947 L14.88,66.577 L24.6,77.595 L35.456,77.271 L45.016,66.901 L46.934,54.949 L52.141,53.139 L53.483,43.622 L50.13,43.725 Z M7.045,41.885 L6.788,28.065 L29.226,14.9 L52.844,30.655 L52.628,41.025 L57.604,23.94 L43.556,5.376 L26.49,3 L11.803,6.673 L1.002,27.415 L7.045,41.885 Z" id="Shape"></path>
@@ -77,16 +77,16 @@
     </g>
             </svg>
         </div>
-        <div flex="10"><h2 class="md-subhead center">Point to where it hurts!</h2></div>
+        <div><h2 class="md-subhead center">Point to where it hurts!</h2></div>
     </div>
 
     <!-- Bottom buttons -->
     <!--  Text/number/multiselect button -->
-    <div layout="row">
-        <div flex="50" class="colorblack bodybtn" layout="column" layout-align="center center" ng-click="vm.back()">
+    <div class="navbtn-container" layout="row">
+        <div class="colorblack navbtn bottom left" layout="column" layout-align="center center" ng-click="vm.back()">
             BACK
         </div>
-        <div flex="50" class="colorgrey bodybtn" layout="column" layout-align="center center" ng-click="vm.next()">
+        <div class="colorgrey navbtn bottom right" layout="column" layout-align="center center" ng-click="vm.next()">
             NEXT
         </div>
     </div>

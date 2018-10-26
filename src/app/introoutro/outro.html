@@ -1,13 +1,17 @@
-<div layout="column" layout-fill>
-    <div layout="row" ng-show="true">
-        <div flex class="colorblack navbtn" layout="column" layout-align="center center" ui-sref="body">
+<div layout="column" flex>
+    <div layout="row" class="navbtn-container">
+        <div flex class="colorblack navbtn top" layout="column" layout-align="center center" ng-click="vm.back()">
             BACK
         </div>
     </div>
-    <div flex layout="column" layout-align="center center" layout-padding>
-        <h2 class="md-display-1 center">Are you sure you want to submit?</h2>
+    <div flex="noshrink" layout="column">
+        <div flex layout="column" layout-align="center center" layout-padding>
+            <h2 class="md-display-1 center">Are you sure you want to submit?</h2>
+        </div>
     </div>
-    <div layout="row" layout-align="center center" class="colorred navbtn" ng-click="vm.submit()">
-        SUBMIT
+    <div layout="row" class="navbtn-container">
+        <div class="colorred navbtn bottom" layout="column" layout-align="center center" ng-click="vm.submit()">
+            SUBMIT
+        </div>
     </div>
 </div>

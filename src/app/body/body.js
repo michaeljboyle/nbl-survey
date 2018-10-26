@@ -69,9 +69,11 @@
             selected.push(partObj.key);
           }
         }
-        // If it was cleared, deselect the part
-        else {
-          deselect(partObj.key);
+        // If it was cleared, check if the part was already selected or not
+        else if (status == 'cleared') {
+          if (selected.indexOf(partObj.key) != -1) {
+            deselect(partObj.key);
+          }
         }
       }).catch(function(err) {
       });

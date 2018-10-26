@@ -6,6 +6,7 @@ from flask import Flask, request
 from google.appengine.ext import ndb
 from google.appengine.api import mail
 from survey import Survey
+from settings import Settings
 from datetime import datetime, timedelta
 from pytz import timezone
 import json
@@ -15,9 +16,6 @@ import json
 app = Flask(__name__)
 # [END create_app]
 
-EMAIL_SENDER_ADDRESS = 'nbl-suit-exposure-survey@nbl-survey.appspotmail.com'
-SURVEY_LINK_BASE_URL = 'https://nbl-survey.appspot.com/#!/survey/'
-SURVEY_ADMINISTRATOR_EMAIL = 'mboyle88@gmail.com'
 
 SURVEY_EMAIL = """{}:
 
@@ -91,6 +89,8 @@ def createDummy():
 """
 @app.route('/tasks/send-surveys')
 def sendSurveys():
+    email_sender_address = Settings.get('email_sender_address')
+    survey_link_base_url = Settings.get('survey_link_base_url')
     # first get surveys with survey_send_time < now AND
     # last_sent == null
     now = datetime.now()
@@ -104,9 +104,9 @@ def sendSurveys():
     sent_keys = []
     for survey in toSend:
         # create a link to the survey
-        link = SURVEY_LINK_BASE_URL + survey.key.urlsafe()
+        link = survey_link_base_url + survey.key.urlsafe()
         # mail it
-        mail.send_mail(sender=EMAIL_SENDER_ADDRESS,
+        mail.send_mail(sender=email_sender_address,
                        to="%s <%s>" % (survey.first_name, survey.email),
                        subject="30-second NBL survey about your recent suit exposure",
                        body=SURVEY_EMAIL.format(survey.first_name, link))
@@ -124,6 +124,9 @@ def sendSurveys():
 # Task that will send email to survey administrator with latest data
 @app.route('/tasks/send-results')
 def sendResults():
+    email_sender_address = Settings.get('email_sender_address')
+    survey_admin_email = Settings.get('survey_admin_email')
+
     toSend = Survey.query(Survey.results_reported == False,
                           Survey.survey_complete_timestamp != None).fetch()
 
@@ -152,8 +155,8 @@ def sendResults():
     logging.info('the length of the body of email is %s' % str(len(body)))
     logging.info(body)
 
-    mail.send_mail(sender=EMAIL_SENDER_ADDRESS,
-                   to=SURVEY_ADMINISTRATOR_EMAIL,
+    mail.send_mail(sender=email_sender_address,
+                   to=survey_admin_email,
                    subject="NBL survey data", body=body)
     
     reported_keys = []
@@ -161,6 +164,23 @@ def sendResults():
         survey.results_reported = True
         reported_keys.append(survey.put().urlsafe())
     return json.dumps(reported_keys)
+
+
+@app.route('/admin/settings')
+def initSettings():
+    # Initializes settings or returns if already all initialized
+    email_sender_address = Settings.get('email_sender_address')
+    survey_admin_email = Settings.get('survey_admin_email')
+    survey_link_base_url = Settings.get('survey_link_base_url')
+
+    return_str = """
+        email_sender_address: {}\n
+        survey_admin_email: {}\n
+        survey_link_base_url: {}\n
+        """.format(email_sender_address, survey_admin_email,
+                   survey_link_base_url)
+
+    return return_str
 
 
 @app.errorhandler(500)

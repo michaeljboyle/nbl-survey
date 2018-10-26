@@ -6,6 +6,10 @@ handlers:
 - url: /tasks/.*
   script: server.main2.app
   login: admin
+
+- url: /admin/.*
+  script: server.main2.app
+  login: admin
   
 - url: /api/.*
   script: server.main2.app
